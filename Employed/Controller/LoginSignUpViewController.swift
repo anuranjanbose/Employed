@@ -48,18 +48,21 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         if loginSignUpSegment.selectedSegmentIndex == 0 {
             signUpDetailsView.isHidden = true
             loginDetailsView.isHidden = false
+            self.navigationItem.title = "Login"
             
         }
         else if loginSignUpSegment.selectedSegmentIndex == 1 {
             signUpDetailsView.isHidden = false
             loginDetailsView.isHidden = true
+            self.navigationItem.title = "Sign Up"
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.navigationItem.title = "Login"
+
         self.loginEmailIdTextField.delegate = self
      //   self.loginEmailIdTextField.delegate = self
         
@@ -68,7 +71,9 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         tickImageView.isHidden = true
         loginDetailsView.isHidden = false
         signUpDetailsView.isHidden = true
-      // loginPasswordTextField.isEnabled = false
+        
+        loginPasswordTextField.isEnabled = false
+        
         loginEmailIdTextField.becomeFirstResponder()
         loginButton.isEnabled = false
         loginActivityIndicator.isHidden = true
@@ -88,6 +93,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
             "client_secret" : "abcde12345",
             "client_id" : "ec7c3bde-9f51-4113-9ecf-6ca6fd03b66b",
             "scope" : "ios",
+            "deviceId" : "123456",
             "grant_type" : "password"]
         
         func getPostDataAttributes(params:[String:String]) -> Data
@@ -106,7 +112,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         let parametersData = getPostDataAttributes(params: parameters)
         
-        guard let url = URL(string: "https://qa.curiousworld.com/api/v2/Login?_format=json")
+        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Login?_format=json")
             else {
                 return
         }
@@ -128,32 +134,20 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         session.dataTask(with: request) {
             (data , response , error) in
-            if let data = data
-            {
-                do
-                {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                    {
-                        if let userData = json["data"] as? [String : Any]
-                        {
-                            guard let firstName = userData["firstName"] as? String else {
-                                return
-                            }
+            if let data = data {
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] {
+                        if let userData = json["data"] as? [String : Any] {
+                            guard let firstName = userData["firstName"] as? String else { return }
                             //self.loginparams.firstName = firstName
                             //print(firstName)
-                            guard let lastName = userData["lastName"] as? String else {
-                                return
-                            }
+                            guard let lastName = userData["lastName"] as? String else { return }
                             //self.loginparams.lastName = lastName
                             
-                            guard let uID = userData["uid"] as? String else {
-                                return
-                            }
+                            guard let uID = userData["uid"] as? String else { return }
                             //self.loginparams.iID = uID
                             
-                            guard let subscriptionStatus = userData["subscriptionStatus"] as? String else {
-                                return
-                            }
+                            guard let subscriptionStatus = userData["subscriptionStatus"] as? String else { return }
                             //self.loginparams.Subscribtion = subscriptionStatus
                             UserDefaults.standard.set(true, forKey: "loggedin")
                             UserDefaults.standard.set(firstName, forKey: "fn")
@@ -163,18 +157,12 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                         }
                         if let statusmsg = json["status"] as? [String : Any]
                         {
-                            guard let codeResponse = statusmsg["code"] as? Int else
-                            {
-                                return
-                            }
+                            guard let codeResponse = statusmsg["code"] as? Int else { return }
                             self.loginValidationCode = codeResponse
                             
-                            guard let messageResponse = statusmsg["message"] as? String
-                                else
-                            {
-                                return
-                            }
+                            guard let messageResponse = statusmsg["message"] as? String else { return }
                             self.loginValidationMessage = messageResponse
+                            print(self.loginValidationCode)
                             self.loginApiHandler()
                         }
                     }
@@ -192,8 +180,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     func loginApiHandler()
     {
-        if(loginValidationCode == 1)
-        {
+        if loginValidationCode == 1 {
             DispatchQueue.main.async {
                 
 //                self.showProfileView()
@@ -201,15 +188,12 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 print(self.loginValidationMessage)
 //                self.toastMessageLabel.toastMessageLabel(message: self.loginValidationMessage)
             }
-        }
-        else
-        {
+        } else {
             DispatchQueue.main.async {
 //                self.activityIndicatorLoginView.isHidden = true
                // self.toastMessageLabel.toastMessageLabel(message: self.loginValidationMessage)
                // self.toastLabel
             }
-            
         }
     }
 
@@ -361,9 +345,9 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+            
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else {
-            return }
+                return }
         request.httpBody = httpBody
         let session = URLSession.shared
         print("============%@", parameters)
@@ -419,16 +403,16 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     func validateEmail() {
-        if(emailValidationCode == 1)
-        {            DispatchQueue.main.async {
-            self.toastLabel.isHidden = true
-            self.loginPasswordTextField.isEnabled = true
-            self.activityIndicator.isHidden = true
-            self.tickImageView.isHidden = false
-            self.tickImageView.image = UIImage(named: "tick.png")
-            self.loginPasswordTextField.isEnabled = true
-            self.flag = self.flag + 1
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callback), userInfo: nil, repeats: false)
+        if emailValidationCode == 1 {
+            DispatchQueue.main.async {
+                self.toastLabel.isHidden = true
+                self.loginPasswordTextField.isEnabled = true
+                self.activityIndicator.isHidden = true
+                self.tickImageView.isHidden = false
+                self.tickImageView.image = UIImage(named: "tick.png")
+                self.loginPasswordTextField.isEnabled = true
+                self.flag = self.flag + 1
+//            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callback), userInfo: nil, repeats: false)
             }
         }
         else {
@@ -444,12 +428,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                           self.toastLabel.toast(message: "\(message)")
                     }
                 }
-//                self.loginPasswordTextField.isEnabled = false
-//                self.activityIndicator.isHidden = true
-//                self.tickImageView.isHidden = false
-//                self.tickImageView.image = UIImage(named: "cross.png")
-//
-//                self.toastLabel.toast(message: "\(self.emailMessage!)")
+
             }
         }
     }
@@ -465,14 +444,10 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func navigateToWelcomeNewUserViewController() {
-        
-            loginActivityIndicator.isHidden = true
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        loginActivityIndicator.isHidden = true
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeNewUserViewController") as! WelcomeNewUserViewController
-
         controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
-        //self.present(controller, animated: true, completion: nil)
         self.navigationController?.pushViewController(controller, animated: true)
-        
     }
 }

@@ -26,10 +26,7 @@ class GalleryViewController: UIViewController {
         let nib = UINib.init(nibName: "GalleryImageCollectionViewCell", bundle: nil)
         galleryCollectionView.register(nib, forCellWithReuseIdentifier: "GalleryImageCollectionViewCell")
     }
- 
-    func fetchImage(image: UIImage) {
-        
-    }
+
     
     func fetchImageFromJSON() {
         let jsonURL = URL(string: "https://picsum.photos/list")
@@ -42,18 +39,18 @@ class GalleryViewController: UIViewController {
                         self.galleryCollectionView.reloadData()
                     }
                 }
-            }catch {
+            } catch {
                 print("Error While loading data")
             }
         }
         sessionTask.resume()
+        }
     }
-    
-}
 
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count
+            return imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,8 +68,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         return cell
     }
-    
-    
 }
 
 
