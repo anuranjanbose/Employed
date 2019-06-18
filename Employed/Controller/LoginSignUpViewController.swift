@@ -25,6 +25,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     var loginValidationCode: Int!
     var loginValidationMessage: String!
     
+    
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tickImageView: UIImageView!
@@ -71,7 +72,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.title = "Login"
 
         self.loginEmailIdTextField.delegate = self
-     //   self.loginEmailIdTextField.delegate = self
         
         //Initial state
         activityIndicator.isHidden = true
@@ -90,9 +90,11 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         
       //  self.activityIndicatorLoginView.isHidden = false
+        loginButton.isEnabled = false
         loginActivityIndicator.isHidden = false
         let mail = loginEmailIdTextField.text!
         let password = loginPasswordTextField.text!
+        
         
         let parameters = [
             "mail" : mail ,
@@ -126,14 +128,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("multipart/form-data; boundary=CuriousWorld", forHTTPHeaderField: "Content-Type")
-        
-        
-        
-        //        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else
-        //        {
-        //            return
-        //        }
-        
+
         
         
         request.httpBody = parametersData
@@ -146,8 +141,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] {
                         if let userData = json["data"] as? [String : Any] {
                             guard let firstName = userData["firstName"] as? String else { return }
-                            //self.loginparams.firstName = firstName
-                            //print(firstName)
                             guard let lastName = userData["lastName"] as? String else { return }
                             //self.loginparams.lastName = lastName
                             
@@ -155,7 +148,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                             //self.loginparams.iID = uID
                             
                             guard let subscriptionStatus = userData["subscriptionStatus"] as? String else { return }
-                            //self.loginparams.Subscribtion = subscriptionStatus
                             UserDefaults.standard.set(true, forKey: "loggedin")
                             UserDefaults.standard.set(firstName, forKey: "fn")
                             UserDefaults.standard.set(lastName, forKey: "ln")
@@ -170,12 +162,10 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                             guard let messageResponse = statusmsg["message"] as? String else { return }
                             self.loginValidationMessage = messageResponse
                             print(self.loginValidationCode)
-                            self.loginApiHandler()
+                            self.loginHandler()
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                     print(error)
                 }
             }
@@ -185,23 +175,19 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    func loginApiHandler()
+    func loginHandler()
     {
         if loginValidationCode == 1 {
             DispatchQueue.main.async {
                 
-//                self.showProfileView()
                 self.navigateToWelcomeNewUserViewController()
                 print(self.loginValidationMessage)
-//                self.toastMessageLabel.toastMessageLabel(message: self.loginValidationMessage)
             }
         } else {
             DispatchQueue.main.async {
                 self.loginActivityIndicator.isHidden = true
                 self.toastLabel.toast(message: "Incorrect Password")
-//                self.activityIndicatorLoginView.isHidden = true
-               // self.toastMessageLabel.toastMessageLabel(message: self.loginValidationMessage)
-               // self.toastLabel
+                self.loginButton.isEnabled = true
             }
         }
     }
