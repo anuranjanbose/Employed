@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D18590322B77BB000FC6489 /* SaveAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D18590222B77BB000FC6489 /* SaveAnnotation.swift */; };
 		7D1D0EC622AE3AE7003DA660 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D0EC522AE3AE7003DA660 /* MapViewController.swift */; };
 		7D3D76B322B0BE5B0058F2FE /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D76B122B0BE5B0058F2FE /* CustomCollectionViewCell.swift */; };
 		7D3D76B422B0BE5B0058F2FE /* CustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D3D76B222B0BE5B0058F2FE /* CustomCollectionViewCell.xib */; };
@@ -54,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7D18590222B77BB000FC6489 /* SaveAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAnnotation.swift; sourceTree = "<group>"; };
 		7D1D0EC522AE3AE7003DA660 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7D3D76B122B0BE5B0058F2FE /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D3D76B222B0BE5B0058F2FE /* CustomCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				7D3D76BD22B0DDA50058F2FE /* Toast.swift */,
+				7D18590222B77BB000FC6489 /* SaveAnnotation.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				7D4E84AE22AF76E800412DB9 /* Image.swift in Sources */,
 				7D4E84AC22AF758E00412DB9 /* Employee.swift in Sources */,
 				7D4E84A922AF73C800412DB9 /* WelcomeNewUserViewController.swift in Sources */,
+				7D18590322B77BB000FC6489 /* SaveAnnotation.swift in Sources */,
 				7D3D76BE22B0DDA50058F2FE /* Toast.swift in Sources */,
 				7DF9FC1222A90E4A00AC8D8C /* Employed.xcdatamodeld in Sources */,
 				7DF9FC0C22A90E4A00AC8D8C /* LoginSignUpViewController.swift in Sources */,

@@ -8,130 +8,114 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-final class CustomAnnotation: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String) {
-        self.coordinate = coordinate
-        self.title = title
-        self.subtitle = subtitle
-    }
+
+
+class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
     
-    var region: MKCoordinateRegion {
-        let span = MKCoordinateSpan(latitudeDelta: 0.8, longitudeDelta: 0.8)
-        return MKCoordinateRegion(center: coordinate, span: span)
-    }
-}
-
-
-class MapViewController: UIViewController {
-    
+    @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var mapView: MKMapView!
+    
+    let locationManager = CLLocationManager()
+    
+    fileprivate lazy var fetchedResultController: NSFetchedResultsController<Annotation> =
+    {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let context = appDelegate?.persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest = Annotation.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
+        let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultController.delegate = self as? NSFetchedResultsControllerDelegate
+        try! fetchResultController.performFetch()
+        return fetchResultController
+    }()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        let firstCoordinate = CLLocationCoordinate2D(latitude: 28.6343, longitude: 77.4455)
-        let firstAnnotation = CustomAnnotation(coordinate: firstCoordinate, title: "ABES College", subtitle: "College")
+
+        tapView.layer.borderWidth = 1.0
+        tapView.layer.masksToBounds = false
+        tapView.layer.borderColor = UIColor.white.cgColor
+        tapView.layer.cornerRadius = tapView.frame.size.width / 2
+        tapView.clipsToBounds = true
         
-//        let secondCoordinate = CLLocationCoordinate2D(latitude: 28.5339, longitude: 77.3482)
-//        let secondAnnotation = CustomAnnotation(coordinate: secondCoordinate, title: "To The New", subtitle: "Work Place")
-        let thirdCoordinate = CLLocationCoordinate2D(latitude: 28.6758, longitude: 77.5022)
-        let thirdAnnotation = CustomAnnotation(coordinate: thirdCoordinate, title: "AKGEC", subtitle: "College")
-//        let fourthCoordinate = CLLocationCoordinate2D(latitude: 28.6170, longitude: 77.3009)
-//        let fourthAnnotation = CustomAnnotation(coordinate: fourthCoordinate, title: "Mayur Vihar Phase-2", subtitle: "Home")
-//        let fifthCoordinate = CLLocationCoordinate2D(latitude: 28.6129, longitude: 77.2295)
-//        let fifthAnnotation = CustomAnnotation(coordinate: fifthCoordinate, title: "India Gate", subtitle: "New Delhi")
+        if CLLocationManager.authorizationStatus() == .notDetermined
+        {
+            locationManager.requestAlwaysAuthorization()
+        }
+        else if CLLocationManager.authorizationStatus() == .denied
+        {
+            print("Location services were previously denied. Please enable location services for this app in Settings.")
+        }
+        else if CLLocationManager.authorizationStatus() == .authorizedAlways
+        {
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = 1.0
+            locationManager.delegate = self
+            locationManager.stopUpdatingLocation()
+            
+        }
+        mapView.mapType = MKMapType.standard
+        mapView.showsUserLocation = true
         
-        mapView.addAnnotation(firstAnnotation)
-//        mapView.addAnnotation(secondAnnotation)
-        mapView.addAnnotation(thirdAnnotation)
-//        mapView.addAnnotation(fourthAnnotation)
-//        mapView.addAnnotation(fifthAnnotation)
         
         
-        let firstCircle = MKCircle(center: firstCoordinate, radius: 1000 as CLLocationDistance)
-        self.mapView.addOverlay(firstCircle)
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
         
-        let secondCircle = MKCircle(center: thirdCoordinate, radius: 1000 as CLLocationDistance)
-        self.mapView.addOverlay(secondCircle)
         
-        mapView.setRegion(firstAnnotation.region, animated: true)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(sender:)))
+        tap.delegate = self
+        tapView.addGestureRecognizer(tap)
         
-//        let sourcePlaceMark = MKPlacemark(coordinate: firstCoordinate)
-//        let destinationPlaceMark = MKPlacemark(coordinate: thirdCoordinate)
-//        let directionRequest = MKDirections.Request()
-//        
-//        directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
-//        directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
-//        directionRequest.transportType = .automobile
-//        let direction = MKDirections(request: directionRequest)
-//        direction.calculate{(response,error ) in
-//            guard let directionResponse = response else{
-//                if let error = error {
-//                    print("we have error in getting direction \(error.localizedDescription)")
-//                }
-//                return
-//            }
-//            let route = directionResponse.routes[0]
-//            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-//            let rect =  route.polyline.boundingMapRect
-//            self.mapView.setRegion(MKCoordinateRegion.init(rect), animated: true)
-//            self.mapView.delegate = self
-//            // Do any additional setup after loading the view.
-//        }
+        
+    }
+    @objc func viewTapped(sender: UITapGestureRecognizer) {
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        for item in fetchedResultController.fetchedObjects!
+        {
+            let annotations = MKPointAnnotation()
+            annotations.title = item.name
+            annotations.coordinate = CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)
+            mapView.addAnnotation(annotations)
+        }
+        print(fetchedResultController.fetchedObjects!.count)
+    }
     
     
 }
 
 
-extension MapViewController: MKMapViewDelegate {
-    //Actions on annotation function
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let customAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier) as? MKMarkerAnnotationView {
-            customAnnotationView.animatesWhenAdded = true
-            customAnnotationView.titleVisibility = .adaptive
-            customAnnotationView.subtitleVisibility = .adaptive
-            customAnnotationView.canShowCallout = true
-            customAnnotationView.rightCalloutAccessoryView = UIButton(type: .infoDark)
-            //customAnnotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
-            return customAnnotationView
-        }
-        return nil
+
+
+extension MapViewController {
+    
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+        self.mapView.setRegion(region, animated: true)
     }
     
-    
-    //Function for customising overlays
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//
-//        if overlay is MKCircle {
-//            let circle = MKCircleRenderer(overlay: overlay)
-//            circle.strokeColor = UIColor.blue
-//            circle.fillColor = UIColor(red: 0, green: 100, blue: 100, alpha: 0.1)
-//            circle.lineWidth =  2.0
-//            return circle
-//        } else if overlay is MKPolyline {
-//            let renderer = MKPolylineRenderer.init(overlay: overlay)
-//            renderer.strokeColor = UIColor.blue
-//            renderer.lineWidth = 4.0
-//            return renderer
-//        } else {
-//            return MKPolylineRenderer()
-//        }
-//    }
-    
-    //On clicking the annotation, it opens a new view controller
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-//            if let goToDescription = view.annotation?.title! {
-//                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//                let controller = storyBoard.instantiateViewController(withIdentifier: "RandomViewController")
-//                self.navigationController?.pushViewController(controller, animated: true)
-//            }
-        }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("unable to access your Current Location")
     }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("Location updation in process")
+    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("Location updation is done")
+    }
+    
 }
+
+
+
+

@@ -190,6 +190,8 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
             }
         } else {
             DispatchQueue.main.async {
+                self.loginActivityIndicator.isHidden = true
+                self.toastLabel.toast(message: "Incorrect Password")
 //                self.activityIndicatorLoginView.isHidden = true
                // self.toastMessageLabel.toastMessageLabel(message: self.loginValidationMessage)
                // self.toastLabel
@@ -202,7 +204,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         let lastName = signUpLastNameTextField.text!
         let password = signUpPasswordTextField.text!
         let email = signUpEmailIdTextField.text!
-        let parameters = ["firstName" : firstName ,
+        let parameters = ["firstName" : firstName,
                           "lastName" : lastName,
                           "mail" : email,
                           "deviceId" : "12345",
@@ -412,7 +414,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 self.tickImageView.image = UIImage(named: "tick.png")
                 self.loginPasswordTextField.isEnabled = true
                 self.flag = self.flag + 1
-//            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callback), userInfo: nil, repeats: false)
+
             }
         }
         else {
@@ -434,14 +436,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @objc func callback() {
-        print("done")
-//        userView.isHidden = true
-//        nextButton.isHidden = true
-//        passwordView.isHidden = false
-//        nextButtonOfPasswordView.isHidden = false
-       // passwordView.emailDisplayButton.setTitle(userView.emailTextField.text, for: .normal)
-    }
     
     func navigateToWelcomeNewUserViewController() {
         loginActivityIndicator.isHidden = true

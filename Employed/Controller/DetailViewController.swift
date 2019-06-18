@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveAnnotation {
     
     @IBOutlet weak var employeeSalaryLabel: UILabel!
     @IBOutlet weak var employeeNameLabel: UILabel!
@@ -17,10 +17,38 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var employeeMapView: MKMapView!
     @IBOutlet weak var galleryCollectionView: UICollectionView!
     
+    let locationManager = CLLocationManager()
+    
     @IBOutlet weak var customSegment: CustomSegment!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        self.navigationItem.title = "Employee Details"
+        
+        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        longPressRecogniser.minimumPressDuration = 0.5
+        employeeMapView.addGestureRecognizer(longPressRecogniser)
+        
+        employeeMapView.mapType = MKMapType.standard
+        employeeMapView.showsUserLocation = true
+        
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestAlwaysAuthorization()
+        }
+        else if CLLocationManager.authorizationStatus() == .denied {
+            print("Location services were previously denied. Please enable location services for this app in Settings.")
+        }
+        else if CLLocationManager.authorizationStatus() == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = 1.0
+            locationManager.delegate = self
+            locationManager.stopUpdatingLocation()
+        }
+        
+        
         galleryCollectionView.delegate = self
         galleryCollectionView.dataSource = self
         
@@ -31,6 +59,28 @@ class DetailViewController: UIViewController {
         fillDetailsOfEmployee()
         //performActions()
     }
+    
+    
+    @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state == .began {
+            let location = gestureReconizer.location(in: employeeMapView)
+            let coordinate = employeeMapView.convert(location,toCoordinateFrom: employeeMapView)
+            
+            // Add annotation:
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "latitude:" + String(format: "%.02f",annotation.coordinate.latitude) + "& longitude:" + String(format: "%.02f",annotation.coordinate.longitude)
+            employeeMapView.addAnnotation(annotation)
+            addData(name: self.employeeNameLabel.text! , longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude)
+            
+            
+            let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            urls[urls.count-1] as NSURL
+            print(urls)
+        }
+    }
+    
+    
     private func performActions() {
         customSegment.galleryButton.addTarget(self, action: #selector(self.onClickGalleryButton), for: .touchUpInside)
         
@@ -43,37 +93,47 @@ class DetailViewController: UIViewController {
     
     @objc func onClickAddPhotoButton() {
         
-        customSegment.galleryButton.backgroundColor = .lightGray
-        customSegment.addImageToGalleryButton.backgroundColor = .lightGray
+        //customSegment.galleryButton.backgroundColor = .lightGray
+        //customSegment.addImageToGalleryButton.backgroundColor = .lightGray
         customSegment.mapButton.backgroundColor = .clear
+        customSegment.mapButton.setTitleColor(.black, for: .normal)
         customSegment.addLocationToMapButton.backgroundColor = .clear
     }
     
     @objc func onClickGalleryButton() {
-        customSegment.galleryButton.layer.borderWidth = 1
-        customSegment.galleryButton.layer.borderColor = UIColor.black.cgColor
+       // customSegment.galleryButton.layer.borderWidth = 1
+       // customSegment.galleryButton.layer.borderColor = UIColor.black.cgColor
         employeeMapView.isHidden = true
         galleryCollectionView.isHidden = false
-        customSegment.galleryButton.backgroundColor = .lightGray
-        customSegment.addImageToGalleryButton.backgroundColor = .lightGray
+        //customSegment.galleryButton.backgroundColor = .lightGray
+        //customSegment.addImageToGalleryButton.backgroundColor = .lightGray
         customSegment.mapButton.backgroundColor = .clear
-        customSegment.addLocationToMapButton.backgroundColor = .clear
+        customSegment.mapButton.setTitleColor(.black, for: .normal)
+        
+        customSegment.galleryButton.backgroundColor = .black
+        customSegment.galleryButton.setTitleColor(.white, for: .normal)
     }
     
     @objc func onClickMapButton() {
         galleryCollectionView.isHidden = true
         employeeMapView.isHidden = false
-        customSegment.mapButton.backgroundColor = .lightGray
-        customSegment.addLocationToMapButton.backgroundColor = .lightGray
+        
+       // customSegment.mapButton.backgroundColor = .lightGray
+       // customSegment.addLocationToMapButton.backgroundColor = .lightGray
+        
+        customSegment.mapButton.backgroundColor = .black
+        customSegment.mapButton.setTitleColor(.white, for: .normal)
+        
+        customSegment.galleryButton.setTitleColor(.black, for: .normal)
         customSegment.galleryButton.backgroundColor = .clear
-        customSegment.addImageToGalleryButton.backgroundColor = .clear
+        //customSegment.addImageToGalleryButton.backgroundColor = .clear
     }
     
     @objc func onClickAddMapButton() {
-        customSegment.mapButton.backgroundColor = .lightGray
-        customSegment.addLocationToMapButton.backgroundColor = .lightGray
+      //  customSegment.mapButton.backgroundColor = .lightGray
+      //  customSegment.addLocationToMapButton.backgroundColor = .lightGray
         customSegment.galleryButton.backgroundColor = .clear
-        customSegment.addImageToGalleryButton.backgroundColor = .clear
+        customSegment.galleryButton.setTitleColor(.black, for: .normal)
     }
     
 }

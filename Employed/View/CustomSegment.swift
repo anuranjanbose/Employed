@@ -16,6 +16,9 @@ class CustomSegment: UIView {
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var addLocationToMapButton: UIButton!
     
+    @IBOutlet weak var galleryStackView: UIStackView!
+    
+    @IBOutlet weak var mapStackView: UIStackView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

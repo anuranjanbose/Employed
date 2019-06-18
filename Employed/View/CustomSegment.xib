@@ -15,7 +15,9 @@
                 <outlet property="addImageToGalleryButton" destination="I6G-nO-W0I" id="IBf-VB-6lw"/>
                 <outlet property="addLocationToMapButton" destination="ano-t4-Dkl" id="g2h-nS-bIe"/>
                 <outlet property="galleryButton" destination="QU1-EW-du9" id="kFv-Y9-lLC"/>
+                <outlet property="galleryStackView" destination="qYn-0R-zyP" id="A3e-lG-kwz"/>
                 <outlet property="mapButton" destination="12n-B8-1F0" id="Hs1-zb-c0c"/>
+                <outlet property="mapStackView" destination="EsT-fS-dcm" id="f2b-gj-uGd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -29,13 +31,13 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="qYn-0R-zyP">
                             <rect key="frame" x="0.0" y="0.0" width="207" height="60"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QU1-EW-du9">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QU1-EW-du9">
                                     <rect key="frame" x="0.0" y="0.0" width="160.5" height="60"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Gallery"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6G-nO-W0I">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6G-nO-W0I">
                                     <rect key="frame" x="160.5" y="0.0" width="46.5" height="60"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </button>
@@ -44,13 +46,13 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EsT-fS-dcm">
                             <rect key="frame" x="207" y="0.0" width="207" height="60"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12n-B8-1F0">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12n-B8-1F0">
                                     <rect key="frame" x="0.0" y="0.0" width="167.5" height="60"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Location"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ano-t4-Dkl">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ano-t4-Dkl">
                                     <rect key="frame" x="167.5" y="0.0" width="39.5" height="60"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </button>
