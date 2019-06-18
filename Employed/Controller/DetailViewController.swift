@@ -24,7 +24,24 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        customSegment.layer.masksToBounds = false
+//        customSegment.layer.shadowColor = UIColor.black.cgColor
+//        customSegment.layer.shadowOpacity = 0.5
+//        customSegment.layer.shadowOffset = CGSize(width: -1, height: 1)
+//        customSegment.layer.shadowRadius = 1
         
+        
+        
+        customSegment.galleryButton.backgroundColor = .lightGray
+        customSegment.mapButton.backgroundColor = .lightGray
+        customSegment.mapButton.setTitleColor(.black, for: .normal)
+        customSegment.galleryButton.setTitleColor(.white, for: .normal)
+        
+        customSegment.addImageToGalleryButton.layer.borderWidth = 1
+        customSegment.addImageToGalleryButton.layer.borderColor = UIColor.black.cgColor
+        
+        customSegment.addLocationToMapButton.layer.borderWidth = 1
+        customSegment.addLocationToMapButton.layer.borderColor = UIColor.black.cgColor
         
         self.navigationItem.title = "Employee Details"
         
@@ -95,9 +112,9 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
         
         //customSegment.galleryButton.backgroundColor = .lightGray
         //customSegment.addImageToGalleryButton.backgroundColor = .lightGray
-        customSegment.mapButton.backgroundColor = .clear
-        customSegment.mapButton.setTitleColor(.black, for: .normal)
-        customSegment.addLocationToMapButton.backgroundColor = .clear
+        customSegment.mapButton.backgroundColor = .lightGray
+        customSegment.mapButton.setTitleColor(.white, for: .normal)
+        //customSegment.addLocationToMapButton.backgroundColor = .clear
     }
     
     @objc func onClickGalleryButton() {
@@ -107,11 +124,11 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
         galleryCollectionView.isHidden = false
         //customSegment.galleryButton.backgroundColor = .lightGray
         //customSegment.addImageToGalleryButton.backgroundColor = .lightGray
-        customSegment.mapButton.backgroundColor = .clear
-        customSegment.mapButton.setTitleColor(.black, for: .normal)
+        customSegment.mapButton.backgroundColor = .lightGray
+        customSegment.mapButton.setTitleColor(.white, for: .normal)
         
-        customSegment.galleryButton.backgroundColor = .black
-        customSegment.galleryButton.setTitleColor(.white, for: .normal)
+        customSegment.galleryButton.backgroundColor = .lightGray
+        customSegment.galleryButton.setTitleColor(.black, for: .normal)
     }
     
     @objc func onClickMapButton() {
@@ -121,19 +138,19 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
        // customSegment.mapButton.backgroundColor = .lightGray
        // customSegment.addLocationToMapButton.backgroundColor = .lightGray
         
-        customSegment.mapButton.backgroundColor = .black
-        customSegment.mapButton.setTitleColor(.white, for: .normal)
+        customSegment.mapButton.backgroundColor = .lightGray
+        customSegment.mapButton.setTitleColor(.black, for: .normal)
         
-        customSegment.galleryButton.setTitleColor(.black, for: .normal)
-        customSegment.galleryButton.backgroundColor = .clear
+        customSegment.galleryButton.setTitleColor(.white, for: .normal)
+        customSegment.galleryButton.backgroundColor = .lightGray
         //customSegment.addImageToGalleryButton.backgroundColor = .clear
     }
     
     @objc func onClickAddMapButton() {
       //  customSegment.mapButton.backgroundColor = .lightGray
       //  customSegment.addLocationToMapButton.backgroundColor = .lightGray
-        customSegment.galleryButton.backgroundColor = .clear
-        customSegment.galleryButton.setTitleColor(.black, for: .normal)
+        customSegment.galleryButton.backgroundColor = .lightGray
+        customSegment.galleryButton.setTitleColor(.white, for: .normal)
     }
     
 }
@@ -146,6 +163,7 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = galleryCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
+        
         return cell
     }
     

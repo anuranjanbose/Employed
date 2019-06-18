@@ -12,13 +12,15 @@ class GalleryImageCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var galleryImageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var imageTitleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    func fetchImage(image: UIImage) {
+    func fetchImage(image: UIImage, imageTitle: String) {
         self.galleryImageView.image = image
+        self.imageTitleLabel.text = imageTitle
         self.activityIndicator.isHidden = true
     }
 }

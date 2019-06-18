@@ -58,6 +58,13 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationItem.title = "Login"
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationItem.title = "Login"
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -414,7 +421,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 self.tickImageView.image = UIImage(named: "tick.png")
                 self.loginPasswordTextField.isEnabled = true
                 self.flag = self.flag + 1
-
             }
         }
         else {
