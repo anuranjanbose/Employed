@@ -13,28 +13,23 @@ class GalleryViewController: UIViewController {
     
     
     var counter = 0
-    
     var countOfItems : Int = 10
-    
-    @IBOutlet weak var loadMoreButton: UIButton!
     var startIndex = 1
-    
+
+    @IBOutlet weak var loadMoreButton: UIButton!
     @IBOutlet weak var galleryCollectionView: UICollectionView!
     
     struct GoogleApiStruct: Decodable {
-        
         let items: [SubItems]
     }
     
 
     struct SubItems: Decodable{
-        
         let title: String
         let image: SubImageInfo
     }
     
     struct SubImageInfo: Decodable {
-        
         let height: Int
         let width: Int
         let thumbnailLink: String
@@ -58,7 +53,7 @@ class GalleryViewController: UIViewController {
         loadMoreButton.layer.borderColor = UIColor.black.cgColor
         loadMoreButton.backgroundColor = .lightGray
         loadMoreButton.setTitleColor(.black, for: .normal)
-       self.storingArray = [GoogleApiStruct]()
+        self.storingArray = [GoogleApiStruct]()
         
         fetchImageFromJSON()
         galleryCollectionView.dataSource = self
@@ -138,10 +133,6 @@ class GalleryViewController: UIViewController {
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        print(storingArray?[self.counter].items.count)
-        
-//        return (storingArray?[self.counter].items.count) ?? 0
-    //    return storingArray?[self.counter].items.count ?? 0
         return self.imageArray.count
     }
     
@@ -150,6 +141,20 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         let widthOfImage = (collectionView.bounds.width/2.0) - 15
         let heightOfImage = widthOfImage * (3/4)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GalleryImageCollectionViewCell", for: indexPath) as! GalleryImageCollectionViewCell
+        
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 2
+        cell.contentView.layer.cornerRadius = 3.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        cell.layer.shadowRadius = 1.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
         
         do {
             
@@ -161,8 +166,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
                 UIImage.loadImage(url: imageURL) { image in
                     
                     if let image = image {
-                        
-                        //cell.fetchImage(image: image)
                         cell.fetchImage(image: image, imageTitle: title)
                     }
                 }

@@ -49,6 +49,11 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         if loginSignUpSegment.selectedSegmentIndex == 0 {
             signUpDetailsView.isHidden = true
             loginDetailsView.isHidden = false
+            
+            
+            
+            
+            
             self.navigationItem.title = "Login"
             
         }
@@ -72,6 +77,42 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.title = "Login"
 
         self.loginEmailIdTextField.delegate = self
+        
+        
+        
+        
+        
+        loginSignUpSegment.layer.masksToBounds = true
+        loginSignUpSegment.layer.cornerRadius = 2
+        loginSignUpSegment.layer.borderWidth = 1
+        loginSignUpSegment.layer.borderColor = UIColor.lightGray.cgColor
+        loginSignUpSegment.layer.shadowColor = UIColor.lightGray.cgColor
+        loginSignUpSegment.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        loginSignUpSegment.layer.shadowRadius = 1.0
+        loginSignUpSegment.layer.shadowOpacity = 1.0
+        loginSignUpSegment.layer.masksToBounds = false
+        
+        loginDetailsView.layer.masksToBounds = true
+        loginDetailsView.layer.cornerRadius = 10
+        loginDetailsView.layer.borderWidth = 2
+        loginDetailsView.layer.borderColor = UIColor.lightGray.cgColor
+        loginDetailsView.layer.shadowColor = UIColor.black.cgColor
+        loginDetailsView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        loginDetailsView.layer.shadowRadius = 1.0
+        loginDetailsView.layer.shadowOpacity = 1.0
+        loginDetailsView.layer.masksToBounds = false
+        
+        
+        
+        signUpDetailsView.layer.masksToBounds = true
+        signUpDetailsView.layer.cornerRadius = 10
+        signUpDetailsView.layer.borderWidth = 2
+        signUpDetailsView.layer.borderColor = UIColor.lightGray.cgColor
+        signUpDetailsView.layer.shadowColor = UIColor.black.cgColor
+        signUpDetailsView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        signUpDetailsView.layer.shadowRadius = 1.0
+        signUpDetailsView.layer.shadowOpacity = 1.0
+        signUpDetailsView.layer.masksToBounds = false
         
         //Initial state
         activityIndicator.isHidden = true
@@ -435,5 +476,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeNewUserViewController") as! WelcomeNewUserViewController
         controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
         self.navigationController?.pushViewController(controller, animated: true)
+        self.loginButton.isEnabled = true
     }
 }

@@ -18,8 +18,8 @@ extension UILabel : Toast
     
     func toast(message: String)  {
         self.isHidden = false
-        self.backgroundColor = UIColor.brown.withAlphaComponent(0.6)
-        self.textColor = UIColor.yellow
+        self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.6)
+        self.textColor = UIColor.white
         self.textAlignment = .center
       //  self.font = UIFont(name: "Chalkduster", size: 20.0)
         self.text = message

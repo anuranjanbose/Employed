@@ -11,6 +11,7 @@ import MapKit
 
 class WelcomeNewUserViewController: UIViewController {
     
+    @IBOutlet weak var welcomeNavigationBar: UINavigationBar!
     var employeeName: String!
 
     @IBOutlet weak var logoutActivityIndicator: UIActivityIndicatorView!
@@ -37,8 +38,10 @@ class WelcomeNewUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         logoutActivityIndicator.isHidden = true
-    self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
+        
         employeeNameLabel.text = employeeName
 
     }

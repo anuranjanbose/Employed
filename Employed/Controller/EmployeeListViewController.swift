@@ -87,10 +87,7 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //    return 1
         if isFiltering() {
             searchFooter.setIsFilteringToShow(filteredItemCount: filteredResult.count, of: result.count)
             return filteredResult.count
@@ -98,26 +95,66 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
         
         searchFooter.setNotFiltering()
         return result.count
+
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if isFiltering() {
+//            searchFooter.setIsFilteringToShow(filteredItemCount: filteredResult.count, of: result.count)
+//            return filteredResult.count
+//        }
+//
+//        searchFooter.setNotFiltering()
+//        return result.count
+        
+        return 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = employeeListTableView.dequeueReusableCell(withIdentifier: "EmployeeTableViewCell") as! EmployeeTableViewCell
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        
+       
+        
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        cell.layer.shadowRadius = 1.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        
+        
         let emp: Employee
         if isFiltering() {
-            emp = filteredResult[indexPath.row]
+            emp = filteredResult[indexPath.section]
         } else {
-            emp = result[indexPath.row]
+            emp = result[indexPath.section]
         }
-        cell.employeeNameLabel.text = result[indexPath.row].employee_name
+        
+        cell.employeeNameLabel.text = result[indexPath.section].employee_name
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
-        employeeAge = result[indexPath.row].employee_age
-        employeeSalary = result[indexPath.row].employee_salary
-        employeeName = result[indexPath.row].employee_name
+        employeeAge = result[indexPath.section].employee_age
+        employeeSalary = result[indexPath.section].employee_salary
+        employeeName = result[indexPath.section].employee_name
         cellIndex = indexPath
         //employeeAge = result[indexPath.row].employee_age
         
