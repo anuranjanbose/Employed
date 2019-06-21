@@ -67,7 +67,7 @@ class GalleryViewController: UIViewController {
     
     func fetchImageFromJSON() {
         
-        let jsonStringUrl = "https://www.googleapis.com/customsearch/v1?q=mango&cx=014779335774980121077%3Aj4u2pcebgfi&searchType=image&key=AIzaSyDFQJjdsS7BbaEUQYfbwOT93j00GO9kKQw&start=\(self.startIndex)&num=\(self.countOfItems)"
+        let jsonStringUrl = "https://www.googleapis.com/customsearch/v1?q=mango&cx=014779335774980121077%3Aj4u2pcebgfi&searchType=image&key=AIzaSyDLVtX2qzmmmQAbfeYAVB011zADQNZKD74&start=\(self.startIndex)&num=\(self.countOfItems)"
         
         guard let url = URL(string: jsonStringUrl) else { return }
         URLSession.shared.dataTask(with: url)  { ( data,response,err ) in

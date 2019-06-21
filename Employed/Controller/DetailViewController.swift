@@ -8,8 +8,9 @@
 
 import MapKit
 import UIKit
+import CoreData
 
-class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveAnnotation {
+class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveDataToCoreData, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var employeeSalaryLabel: UILabel!
     @IBOutlet weak var employeeNameLabel: UILabel!
@@ -17,13 +18,43 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
     @IBOutlet weak var employeeMapView: MKMapView!
     @IBOutlet weak var galleryCollectionView: UICollectionView!
     
+    
+    var addLocationOnMap = false
+    
     let locationManager = CLLocationManager()
     
     @IBOutlet weak var customSegment: CustomSegment!
     
+    var galleryImageURL = [String]()
+    var galleryImageTitle = [String]()
+    
+    
+    fileprivate lazy var fetchedResultController1: NSFetchedResultsController<EmployeeImage> =
+    {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let context = appDelegate?.persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest = EmployeeImage.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "imageURL", ascending: false)]
+        let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultController.delegate = self
+        try! fetchResultController.performFetch()
+        return fetchResultController as! NSFetchedResultsController<EmployeeImage>
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.galleryImageURL.removeAll()
+        
+        for item in fetchedResultController1.fetchedObjects! {
+            self.galleryImageURL.append(item.imageURL!)
+         //   self.galleryImageTitle.append(item.employeeName!)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        galleryCollectionView.delegate = self
+        galleryCollectionView.dataSource = self
 //        customSegment.layer.masksToBounds = false
 //        customSegment.layer.shadowColor = UIColor.black.cgColor
 //        customSegment.layer.shadowOpacity = 0.5
@@ -66,34 +97,43 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
         }
         
         
-        galleryCollectionView.delegate = self
-        galleryCollectionView.dataSource = self
+       
         
         let nib = UINib.init(nibName: "CustomCollectionViewCell", bundle: nil)
         galleryCollectionView.register(nib, forCellWithReuseIdentifier: "CustomCollectionViewCell")
         
         performActions()
         fillDetailsOfEmployee()
+        
+        for item in fetchedResultController1.fetchedObjects! {
+            
+                self.galleryImageURL.append(item.imageURL!)
+             //   self.galarytitle.append(item.employeeName ?? "")
+            
+        }
         //performActions()
     }
     
     
     @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer) {
-        if gestureReconizer.state == .began {
-            let location = gestureReconizer.location(in: employeeMapView)
-            let coordinate = employeeMapView.convert(location,toCoordinateFrom: employeeMapView)
+        
+        if addLocationOnMap {
+            if gestureReconizer.state == .began {
+                let location = gestureReconizer.location(in: employeeMapView)
+                let coordinate = employeeMapView.convert(location,toCoordinateFrom: employeeMapView)
             
-            // Add annotation:
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "latitude:" + String(format: "%.02f",annotation.coordinate.latitude) + "& longitude:" + String(format: "%.02f",annotation.coordinate.longitude)
-            employeeMapView.addAnnotation(annotation)
-            addData(name: self.employeeNameLabel.text! , longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude)
+                // Add annotation:
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = "latitude:" + String(format: "%.02f",annotation.coordinate.latitude) + "& longitude:" + String(format: "%.02f",annotation.coordinate.longitude)
+                employeeMapView.addAnnotation(annotation)
+                addData(name: self.employeeNameLabel.text! , longitude: annotation.coordinate.longitude, latitude: annotation.coordinate.latitude)
             
             
-            let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            urls[urls.count-1] as NSURL
-            print(urls)
+                let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                urls[urls.count-1] as NSURL
+                print(urls)
+            }
         }
     }
     
@@ -115,6 +155,18 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
         customSegment.mapButton.backgroundColor = .lightGray
         customSegment.mapButton.setTitleColor(.white, for: .normal)
         //customSegment.addLocationToMapButton.backgroundColor = .clear
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        let actionStyleSheet = UIAlertController(title: "Photo Source", message: "Choose a source", preferredStyle: .actionSheet)
+        actionStyleSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {(action : UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        
+        actionStyleSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil ))
+        self.present(actionStyleSheet, animated: true, completion: nil)
     }
     
     @objc func onClickGalleryButton() {
@@ -151,6 +203,21 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
       //  customSegment.addLocationToMapButton.backgroundColor = .lightGray
         customSegment.galleryButton.backgroundColor = .lightGray
         customSegment.galleryButton.setTitleColor(.white, for: .normal)
+        
+        if addLocationOnMap {
+            addLocationOnMap = false
+           // customSegment.addLocationToMapButton.isSelected = false
+            customSegment.addLocationToMapButton.tintColor = .black
+            customSegment.addLocationToMapButton.backgroundColor = .white
+            print("Add location on map disabled")
+        } else {
+            addLocationOnMap = true
+            
+            customSegment.addLocationToMapButton.tintColor = .white
+            customSegment.addLocationToMapButton.backgroundColor = .black
+          //  customSegment.addLocationToMapButton.isSelected = true
+            print("Add location on map enabled")
+        }
     }
     
 }
@@ -158,11 +225,36 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
 
 extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return self.galleryImageURL.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = galleryCollectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
+        
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 2
+        cell.contentView.layer.cornerRadius = 3.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        cell.layer.shadowRadius = 1.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        do {
+            let url = self.galleryImageURL[indexPath.row]
+           // let title = self.galleryImageTitle[indexPath.row]
+            guard let imageURL = URL(string: url) else { return cell }
+            UIImage.loadImage(url: imageURL) { image in
+                if let image = image {
+                    cell.galleryImageView.image = image
+                  //  cell.galleryImageTitle.text = title
+                }
+            }
+        }
+        
         
         return cell
     }
@@ -179,3 +271,40 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
         employeeAgeLabel.text = employeeAge
     }
 }
+
+
+
+extension DetailViewController {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
+        self.employeeMapView.setRegion(region, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("unable to access your Current Location")
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        //print("update in db")
+        //self.galleryCollectionView.reloadData()
+    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        //print("update in db done")
+        self.galleryCollectionView.reloadData()
+    }
+    
+}
+
+extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let imageurl = info[UIImagePickerController.InfoKey.imageURL] as! NSURL
+        let myString = imageurl.absoluteString
+        self.galleryImageURL.append(myString!)
+        addEmployeeImageToGallery(imageURL: myString! , employeeName: self.employeeNameLabel?.text ?? "" )
+        self.galleryCollectionView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+

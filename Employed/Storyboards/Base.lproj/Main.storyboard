@@ -334,6 +334,11 @@
                             <constraint firstItem="Qzh-hD-G5k" firstAttribute="leading" secondItem="CYz-oE-wqT" secondAttribute="leading" constant="16" id="xze-Bj-snf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CYz-oE-wqT"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="fAr-Z5-SoD"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="dL8-6g-ZE9"/>
                     <connections>
@@ -356,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qLQ-Fb-3Dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1884" y="475.41229385307349"/>
+            <point key="canvasLocation" x="1884" y="475"/>
         </scene>
         <!--Welcome New User View Controller-->
         <scene sceneID="rkb-qG-DM2">
@@ -578,7 +583,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aAa-IT-Pja" customClass="CustomSegment" customModule="Employed" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="116" width="375" height="68"/>
+                                                <rect key="frame" x="0.0" y="116" width="375" height="58"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xn5-Pt-AIG">
                                                 <rect key="frame" x="0.0" y="184" width="375" height="463"/>
@@ -637,7 +642,7 @@
                                             <constraint firstAttribute="trailing" secondItem="we5-IQ-aVL" secondAttribute="trailing" id="d4A-Zm-BVW"/>
                                             <constraint firstItem="aAa-IT-Pja" firstAttribute="top" secondItem="eBq-wJ-95o" secondAttribute="bottom" id="dnn-Zl-Wnv"/>
                                             <constraint firstItem="eBq-wJ-95o" firstAttribute="leading" secondItem="4nb-7D-18D" secondAttribute="leading" id="nfs-lL-YAm"/>
-                                            <constraint firstItem="xn5-Pt-AIG" firstAttribute="top" secondItem="aAa-IT-Pja" secondAttribute="bottom" id="wwF-wA-M0J"/>
+                                            <constraint firstItem="xn5-Pt-AIG" firstAttribute="top" secondItem="aAa-IT-Pja" secondAttribute="bottom" constant="10" id="wwF-wA-M0J"/>
                                             <constraint firstItem="xn5-Pt-AIG" firstAttribute="top" secondItem="4nb-7D-18D" secondAttribute="top" constant="184" id="xft-vU-JPC"/>
                                             <constraint firstAttribute="bottom" secondItem="xn5-Pt-AIG" secondAttribute="bottom" id="zfV-3k-lZF"/>
                                         </constraints>

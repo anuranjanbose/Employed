@@ -26,9 +26,18 @@ class EmployeeListViewController: UIViewController {
     
     @IBOutlet weak var employeeListTableView: UITableView!
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+         self.employeeListTableView.deselectSelectedRow(animated: true)
+        self.searchController.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        urls[urls.count-1] as NSURL
+        print(urls)
        
         employeeListTableView.dataSource = self
         employeeListTableView.delegate = self
