@@ -67,6 +67,15 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationItem.title = "Login"
+        self.loginEmailIdTextField.text = ""
+        self.loginPasswordTextField.text = ""
+        self.loginPasswordTextField.isEnabled = false
+        self.loginEmailIdTextField.layer.borderWidth = 2.0
+        self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
+        self.loginEmailIdTextField.becomeFirstResponder()
+     //   self.loginButton.isEnabled = false
+        
+        self.loginPasswordTextField.layer.borderWidth = 0
     }
     override func viewDidAppear(_ animated: Bool) {
         self.navigationItem.title = "Login"
@@ -76,10 +85,16 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         self.navigationItem.title = "Login"
 
+        self.hideKeyboardWhenTappedAround()
         self.loginEmailIdTextField.delegate = self
+        self.loginPasswordTextField.delegate = self
         
         
         
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.loginEmailIdTextField.frame.height))
+        loginEmailIdTextField.rightView = paddingView
+        loginEmailIdTextField.rightViewMode = UITextField.ViewMode.always
         
         
         loginSignUpSegment.layer.masksToBounds = true
@@ -116,13 +131,16 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         //Initial state
         activityIndicator.isHidden = true
-        tickImageView.isHidden = true
         loginDetailsView.isHidden = false
         signUpDetailsView.isHidden = true
+        
+        loginEmailIdTextField.layer.borderWidth = 2.0
+        loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
         
         loginPasswordTextField.isEnabled = false
         
         loginEmailIdTextField.becomeFirstResponder()
+        signUpFirstNameTextField.becomeFirstResponder()
         loginButton.isEnabled = false
         loginActivityIndicator.isHidden = true
     }
@@ -362,64 +380,73 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     
+    
 
     
     
     @IBAction func emailIdTextFieldEditingChanged() {
         
-        if loginEmailIdTextField.text == "" {
-            self.tickImageView.isHidden = true
-            self.activityIndicator.isHidden = true
-            self.toastLabel.isHidden = true
-        } else {
         
-        self.tickImageView.isHidden = true
-        self.activityIndicator.isHidden = false
-        let mail = loginEmailIdTextField.text
-        let parameters = ["mail" : mail]
-        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Validate/Email?_format=json") else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else {
-                return }
-        request.httpBody = httpBody
-        let session = URLSession.shared
-        print("============%@", parameters)
-        print("============%@", request.allHTTPHeaderFields)
-        session.dataTask(with: request) { (data, response, error) in
-            if let response = response {
-                print(response)
-            }
-            if let data = data {
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
-                        print("json \(json)")
-                        if let statusCode = json["status"] as? [String:Any]{
-                            print(statusCode)
-                            guard let codeResponse = statusCode["code"] as? Int else {return}
-                            print("=========================== \(codeResponse)")
-                            self.emailValidationCode = codeResponse
-                            self.validateEmail()
-                        }
-                        if let statusMessage = json["status"] as? [String:Any]{
-                            print(statusMessage)
-                            guard let codeResponseMessage = statusMessage["message"] as? String else {return}
-                            print("=========================== \(codeResponseMessage)")
-                            self.emailMessage = codeResponseMessage
-                        }
-                    }
-                } catch {
-                    print(error)
-                }
-            }
-            
-            }.resume()
-        print(emailValidationCode as Any)
-        print(emailMessage as Any)
-        }
         
+        loginPasswordTextField.layer.borderWidth = 0
+        loginPasswordTextField.isEnabled = false
+        
+        loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
+        
+//        if loginEmailIdTextField.text == "" {
+//            self.tickImageView.isHidden = true
+//            self.activityIndicator.isHidden = true
+//            self.toastLabel.isHidden = true
+//            self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
+//        } else {
+//
+//        self.tickImageView.isHidden = true
+//        self.activityIndicator.isHidden = false
+//        let mail = loginEmailIdTextField.text
+//        let parameters = ["mail" : mail]
+//        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Validate/Email?_format=json") else { return }
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else {
+//                return }
+//        request.httpBody = httpBody
+//        let session = URLSession.shared
+//        print("============%@", parameters)
+//        print("============%@", request.allHTTPHeaderFields)
+//        session.dataTask(with: request) { (data, response, error) in
+//            if let response = response {
+//                print(response)
+//            }
+//            if let data = data {
+//                do {
+//                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
+//                        print("json \(json)")
+//                        if let statusCode = json["status"] as? [String:Any]{
+//                            print(statusCode)
+//                            guard let codeResponse = statusCode["code"] as? Int else {return}
+//                            print("=========================== \(codeResponse)")
+//                            self.emailValidationCode = codeResponse
+//                            self.validateEmail()
+//                        }
+//                        if let statusMessage = json["status"] as? [String:Any]{
+//                            print(statusMessage)
+//                            guard let codeResponseMessage = statusMessage["message"] as? String else {return}
+//                            print("=========================== \(codeResponseMessage)")
+//                            self.emailMessage = codeResponseMessage
+//                        }
+//                    }
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//
+//            }.resume()
+//        print(emailValidationCode as Any)
+//        print(emailMessage as Any)
+//        }
+//
     }
 
     
@@ -434,19 +461,93 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == loginEmailIdTextField {
-            loginPasswordTextField.becomeFirstResponder()
+            
+            self.loginEmailIdTextField.resignFirstResponder()
+            self.loginPasswordTextField.becomeFirstResponder()
+            
+            if loginEmailIdTextField.text == "" {
+                self.activityIndicator.isHidden = true
+                self.toastLabel.isHidden = true
+                self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
+            } else {
+                
+                self.activityIndicator.isHidden = false
+                let mail = loginEmailIdTextField.text
+                let parameters = ["mail" : mail]
+                guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Validate/Email?_format=json") else { return true }
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else { return true }
+                request.httpBody = httpBody
+                let session = URLSession.shared
+                print("============%@", parameters)
+                print("============%@", request.allHTTPHeaderFields)
+                session.dataTask(with: request) { (data, response, error) in
+                    if let response = response {
+                        print(response)
+                    }
+                    if let data = data {
+                        do {
+                            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
+                                print("json \(json)")
+                                if let statusCode = json["status"] as? [String:Any]{
+                                    print(statusCode)
+                                    guard let codeResponse = statusCode["code"] as? Int else {return}
+                                    print("=========================== \(codeResponse)")
+                                    self.emailValidationCode = codeResponse
+                                    self.validateEmail()
+                                }
+                                if let statusMessage = json["status"] as? [String:Any]{
+                                    print(statusMessage)
+                                    guard let codeResponseMessage = statusMessage["message"] as? String else {return}
+                                    print("=======\(self.emailValidationCode)")
+                                    print("=========================== \(codeResponseMessage)")
+                                    self.emailMessage = codeResponseMessage
+                                }
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                    }.resume()
+                print(emailValidationCode as Any)
+                print(emailMessage as Any)
+            }
+            
+            
+            
+            
+            
+            
+            
+         //       self.loginPasswordTextField.becomeFirstResponder()
+            
+            
+           // loginPasswordTextField.becomeFirstResponder()
         }
         return true
     }
     func validateEmail() {
         if emailValidationCode == 1 {
             DispatchQueue.main.async {
+                
+                self.loginEmailIdTextField.resignFirstResponder()
                 self.toastLabel.isHidden = true
                 self.loginPasswordTextField.isEnabled = true
+                self.loginPasswordTextField.becomeFirstResponder()
+
                 self.activityIndicator.isHidden = true
-                self.tickImageView.isHidden = false
-                self.tickImageView.image = UIImage(named: "tick.png")
+              //  self.tickImageView.isHidden = false
+               // self.tickImageView.image = UIImage(named: "tick.png")
+                self.loginEmailIdTextField.layer.borderWidth = 2.0
+                self.loginEmailIdTextField.layer.borderColor = UIColor(red:19/255, green:135/255, blue:73/255, alpha: 1).cgColor
                 self.loginPasswordTextField.isEnabled = true
+                
+                self.loginPasswordTextField.layer.borderWidth = 2.0
+                self.loginPasswordTextField.layer.borderColor = UIColor.black.cgColor
                 self.flag = self.flag + 1
             }
         }
@@ -456,8 +557,11 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 if self.loginEmailIdTextField.text != "" {
                     self.loginPasswordTextField.isEnabled = false
                     self.activityIndicator.isHidden = true
-                    self.tickImageView.isHidden = false
-                    self.tickImageView.image = UIImage(named: "cross.png")
+                  //  self.tickImageView.isHidden = false
+                   // self.tickImageView.image = UIImage(named: "cross.png")
+                    self.loginEmailIdTextField.layer.borderWidth = 2.0
+                    self.loginEmailIdTextField.layer.borderColor = UIColor(red:168/255, green:42/255, blue:42/255, alpha: 1).cgColor
+                    self.loginPasswordTextField.layer.borderWidth = 0
                     
                     if let message = self.emailMessage {
                           self.toastLabel.toast(message: "\(message)")
@@ -476,6 +580,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeNewUserViewController") as! WelcomeNewUserViewController
         controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
         self.navigationController?.pushViewController(controller, animated: true)
-        self.loginButton.isEnabled = true
+        //self.loginButton.isEnabled = true
     }
 }
