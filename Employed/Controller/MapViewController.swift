@@ -32,10 +32,15 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, M
     }()
     
     
+    func setUpNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setUpNavigationBar()
         tapView.layer.borderWidth = 1.0
         tapView.layer.masksToBounds = false
         tapView.layer.borderColor = UIColor.white.cgColor

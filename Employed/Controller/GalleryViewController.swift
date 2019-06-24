@@ -48,7 +48,7 @@ class GalleryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setUpNavigationBar()
         loadMoreButton.layer.borderWidth = 1
         loadMoreButton.layer.borderColor = UIColor.black.cgColor
         loadMoreButton.backgroundColor = .lightGray
@@ -64,6 +64,12 @@ class GalleryViewController: UIViewController {
         galleryCollectionView.register(nib, forCellWithReuseIdentifier: "GalleryImageCollectionViewCell")
         
     }
+    
+    func setUpNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
+
     
     func fetchImageFromJSON() {
         

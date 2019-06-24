@@ -75,6 +75,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         self.loginEmailIdTextField.layer.borderWidth = 2.0
         self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
         self.loginEmailIdTextField.becomeFirstResponder()
+        self.loginActivityIndicator.isHidden = true
      //   self.loginButton.isEnabled = false
         
         self.loginPasswordTextField.layer.borderWidth = 0
@@ -91,7 +92,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         self.loginEmailIdTextField.delegate = self
         self.loginPasswordTextField.delegate = self
         
-        
+        setUpNavigationBar()
         
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.loginEmailIdTextField.frame.height))
@@ -384,8 +385,10 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
-    
+    func setUpNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
 
     
     
