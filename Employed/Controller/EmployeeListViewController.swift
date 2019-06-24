@@ -35,6 +35,7 @@ class EmployeeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Fot the purpose of Sqlite
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         urls[urls.count-1] as NSURL
         print(urls)
@@ -45,6 +46,7 @@ class EmployeeListViewController: UIViewController {
         employeeListTableView.tableFooterView = UIView(frame: .zero)
         let nib = UINib.init(nibName: "EmployeeTableViewCell", bundle: nil)
         employeeListTableView.register(nib, forCellReuseIdentifier: "EmployeeTableViewCell")
+        
         callApi()
         setupNavBar()
         
@@ -62,6 +64,7 @@ class EmployeeListViewController: UIViewController {
         
         // Setup the search footer
         employeeListTableView.tableFooterView = searchFooter
+        
         
         if let splitViewController = splitViewController {
             let controllers = splitViewController.viewControllers
