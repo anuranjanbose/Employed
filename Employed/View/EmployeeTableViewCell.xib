@@ -19,43 +19,62 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="123.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-SL-3DG">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmo-cn-AxI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="123.5"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="employeeList2" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-bA-aE4">
-                                <rect key="frame" x="0.0" y="0.0" width="106" height="123.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="106" id="pVt-M7-wnI"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employee Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIh-aG-4cy">
-                                <rect key="frame" x="106" y="0.0" width="214" height="123.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Zh2-SL-3DG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="123.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="employeeList2" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-bA-aE4">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="123.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="DTb-1C-jIV"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employee Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIh-aG-4cy">
+                                        <rect key="frame" x="100" y="0.0" width="190" height="123.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2h-33-N4B">
+                                        <rect key="frame" x="290" y="0.0" width="30" height="123.5"/>
+                                        <color key="backgroundColor" red="0.90365244290000002" green="0.90365244290000002" blue="0.90365244290000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="CjY-gE-pH1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="&gt;">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="bIh-aG-4cy" secondAttribute="bottom" id="G5X-n3-X7h"/>
-                            <constraint firstItem="bIh-aG-4cy" firstAttribute="top" secondItem="Zh2-SL-3DG" secondAttribute="top" id="Ry5-se-OaE"/>
-                            <constraint firstAttribute="trailing" secondItem="bIh-aG-4cy" secondAttribute="trailing" id="Y2c-sX-sQm"/>
-                            <constraint firstItem="bIh-aG-4cy" firstAttribute="leading" secondItem="ua4-bA-aE4" secondAttribute="trailing" id="g9c-IZ-hwK"/>
+                            <constraint firstItem="Zh2-SL-3DG" firstAttribute="leading" secondItem="fmo-cn-AxI" secondAttribute="leading" id="WsA-O9-kHz"/>
+                            <constraint firstItem="Zh2-SL-3DG" firstAttribute="top" secondItem="fmo-cn-AxI" secondAttribute="top" id="ZUb-Le-6Lh"/>
+                            <constraint firstAttribute="trailing" secondItem="Zh2-SL-3DG" secondAttribute="trailing" id="mhd-fb-QfQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Zh2-SL-3DG" secondAttribute="bottom" id="toG-rz-JvM"/>
                         </constraints>
-                    </stackView>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Zh2-SL-3DG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JdY-CL-LgM"/>
-                    <constraint firstAttribute="bottom" secondItem="Zh2-SL-3DG" secondAttribute="bottom" id="VSj-Xr-JYS"/>
-                    <constraint firstItem="Zh2-SL-3DG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="f7S-7g-Wuh"/>
-                    <constraint firstAttribute="trailing" secondItem="Zh2-SL-3DG" secondAttribute="trailing" id="jKy-qm-VTS"/>
+                    <constraint firstItem="fmo-cn-AxI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Dv8-UT-Bpe"/>
+                    <constraint firstAttribute="bottom" secondItem="fmo-cn-AxI" secondAttribute="bottom" id="PIc-97-6nJ"/>
+                    <constraint firstAttribute="trailing" secondItem="fmo-cn-AxI" secondAttribute="trailing" id="j7I-gZ-Ulq"/>
+                    <constraint firstItem="fmo-cn-AxI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="rK5-wb-cOy"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="employeeImageView" destination="ua4-bA-aE4" id="T91-kl-bPV"/>
                 <outlet property="employeeNameLabel" destination="bIh-aG-4cy" id="X4I-BX-vsT"/>
+                <outlet property="goToDetailViewControllerAccessoryButton" destination="v2h-33-N4B" id="PCI-za-xS8"/>
+                <outlet property="mainView" destination="fmo-cn-AxI" id="gQL-53-Dt9"/>
             </connections>
-            <point key="canvasLocation" x="178" y="86"/>
+            <point key="canvasLocation" x="176.81159420289856" y="85.714285714285708"/>
         </tableViewCell>
     </objects>
     <resources>

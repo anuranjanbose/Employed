@@ -12,6 +12,7 @@ import CoreData
 
 class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveDataToCoreData, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var addAnnotationStatusToastLabel: UILabel!
     @IBOutlet weak var employeeSalaryLabel: UILabel!
     @IBOutlet weak var employeeNameLabel: UILabel!
     @IBOutlet weak var employeeAgeLabel: UILabel!
@@ -152,6 +153,12 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
         
         //customSegment.galleryButton.backgroundColor = .lightGray
         //customSegment.addImageToGalleryButton.backgroundColor = .lightGray
+        
+        if !employeeMapView.isHidden {
+            employeeMapView.isHidden = true
+            galleryCollectionView.isHidden = false
+        }
+        
         customSegment.mapButton.backgroundColor = .lightGray
         customSegment.mapButton.setTitleColor(.white, for: .normal)
         //customSegment.addLocationToMapButton.backgroundColor = .clear
@@ -172,6 +179,8 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
     @objc func onClickGalleryButton() {
        // customSegment.galleryButton.layer.borderWidth = 1
        // customSegment.galleryButton.layer.borderColor = UIColor.black.cgColor
+        
+        
         employeeMapView.isHidden = true
         galleryCollectionView.isHidden = false
         //customSegment.galleryButton.backgroundColor = .lightGray
@@ -201,21 +210,29 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
     @objc func onClickAddMapButton() {
       //  customSegment.mapButton.backgroundColor = .lightGray
       //  customSegment.addLocationToMapButton.backgroundColor = .lightGray
+        
+        if !galleryCollectionView.isHidden {
+            galleryCollectionView.isHidden = true
+            employeeMapView.isHidden = false
+        }
+        
         customSegment.galleryButton.backgroundColor = .lightGray
         customSegment.galleryButton.setTitleColor(.white, for: .normal)
         
         if addLocationOnMap {
             addLocationOnMap = false
            // customSegment.addLocationToMapButton.isSelected = false
-            customSegment.addLocationToMapButton.tintColor = .black
-            customSegment.addLocationToMapButton.backgroundColor = .white
+//            customSegment.addLocationToMapButton.tintColor = .black
+//            customSegment.addLocationToMapButton.backgroundColor = .white
             print("Add location on map disabled")
+            addAnnotationStatusToastLabel.toast(message: "Annotation addition disabled")
         } else {
             addLocationOnMap = true
             
-            customSegment.addLocationToMapButton.tintColor = .white
-            customSegment.addLocationToMapButton.backgroundColor = .black
+//            customSegment.addLocationToMapButton.tintColor = .white
+//            customSegment.addLocationToMapButton.backgroundColor = .black
           //  customSegment.addLocationToMapButton.isSelected = true
+            addAnnotationStatusToastLabel.toast(message: "Annotation addition enabled")
             print("Add location on map enabled")
         }
     }

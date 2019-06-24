@@ -150,6 +150,14 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
         cell.layer.masksToBounds = false
         
         
+        cell.mainView.layer.masksToBounds = true
+        cell.mainView.layer.cornerRadius = 10
+//        cell.layer.borderWidth = 2
+//        cell.mainView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        
+        
+        cell.goToDetailViewControllerAccessoryButton.tag = indexPath.section
         let emp: Employee
         if isFiltering() {
             emp = filteredResult[indexPath.section]
@@ -173,12 +181,25 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
+    
+    
     // using animation for displaying cell
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-        UIView.animate(withDuration: 0.8) {
+        cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) //0.6
+        UIView.animate(withDuration: 0.7) { //0.8
             cell.transform = CGAffineTransform.identity
         }
+        
+        
+        
+//        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+//        UIView.animate(withDuration: 0.9, animations: {
+//            cell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
+//        },completion: { finished in
+//            UIView.animate(withDuration: 0.1, animations: {
+//                cell.layer.transform = CATransform3DMakeScale(1,1,1)
+//            })
+//        })
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -233,9 +254,9 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
         //        navigationItem.largeTitleDisplayMode = .automatic
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        employeeListTableView.reloadData()
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        employeeListTableView.reloadData()
+//    }
 }
 
 //extension EmployeeListVC: UISearchBarDelegate {

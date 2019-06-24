@@ -25,6 +25,8 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     var loginValidationCode: Int!
     var loginValidationMessage: String!
     
+    let font = UIFont.systemFont(ofSize: 16)
+    
     
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -97,15 +99,18 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         loginEmailIdTextField.rightViewMode = UITextField.ViewMode.always
         
         
-        loginSignUpSegment.layer.masksToBounds = true
-        loginSignUpSegment.layer.cornerRadius = 2
-        loginSignUpSegment.layer.borderWidth = 1
-        loginSignUpSegment.layer.borderColor = UIColor.lightGray.cgColor
-        loginSignUpSegment.layer.shadowColor = UIColor.lightGray.cgColor
-        loginSignUpSegment.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        loginSignUpSegment.layer.shadowRadius = 1.0
-        loginSignUpSegment.layer.shadowOpacity = 1.0
-        loginSignUpSegment.layer.masksToBounds = false
+       loginSignUpSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+        
+        
+//        loginSignUpSegment.layer.masksToBounds = true
+//        loginSignUpSegment.layer.cornerRadius = 2
+//        loginSignUpSegment.layer.borderWidth = 1
+//        loginSignUpSegment.layer.borderColor = UIColor.lightGray.cgColor
+//        loginSignUpSegment.layer.shadowColor = UIColor.lightGray.cgColor
+//        loginSignUpSegment.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+//        loginSignUpSegment.layer.shadowRadius = 1.0
+//        loginSignUpSegment.layer.shadowOpacity = 1.0
+//        loginSignUpSegment.layer.masksToBounds = false
         
         loginDetailsView.layer.masksToBounds = true
         loginDetailsView.layer.cornerRadius = 10
