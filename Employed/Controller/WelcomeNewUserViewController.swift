@@ -29,7 +29,7 @@ class WelcomeNewUserViewController: UIViewController {
         UserDefaults.standard.set("nil", forKey: "sub")
        // self.dismiss(animated: true, completion: nil)
          logoutActivityIndicator.isHidden = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
            // self.myTableView.reloadData()
            self.navigationController?.popViewController(animated: true)
         })
