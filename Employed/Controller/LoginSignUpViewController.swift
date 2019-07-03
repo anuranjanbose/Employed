@@ -100,10 +100,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         loginSignUpSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
 
-        
-        
-        
-        
         loginButton.isEnabled = false
 
     }
@@ -180,11 +176,9 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
             "deviceId" : "123456",
             "grant_type" : "password"]
         
-        func getPostDataAttributes(params:[String:String]) -> Data
-        {
+        func getPostDataAttributes(params:[String:String]) -> Data {
             var data = Data()
-            for(key, value) in params
-            {
+            for(key, value) in params {
                 let string = "--CuriousWorld\r\n".data(using: .utf8)
                 data.append(string!)
                 data.append(String.init(format: "Content-Disposition: form-data; name=%@\r\n\r\n", key).data(using: .utf8)!)
@@ -196,10 +190,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         
         let parametersData = getPostDataAttributes(params: parameters)
         
-        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Login?_format=json")
-            else {
-                return
-        }
+        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Login?_format=json") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("multipart/form-data; boundary=CuriousWorld", forHTTPHeaderField: "Content-Type")
@@ -244,14 +235,13 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                     print(error)
                 }
             }
-            }.resume()
+        }.resume()
        
     }
     
     
     
-    func loginHandler()
-    {
+    func loginHandler() {
         if loginValidationCode == 1 {
             DispatchQueue.main.async {
                 
@@ -548,6 +538,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
+    
     func validateEmail() {
         if emailValidationCode == 1 {
             DispatchQueue.main.async {
