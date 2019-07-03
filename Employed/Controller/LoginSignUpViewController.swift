@@ -89,30 +89,47 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.title = "Login"
 
         self.hideKeyboardWhenTappedAround()
-        self.loginEmailIdTextField.delegate = self
-        self.loginPasswordTextField.delegate = self
+        
         
         setUpNavigationBar()
+        setUpView()
+        setUpTextFields()
+        setUpIndicators()
+        
+        setPaddingInsideTextLabel(textField: loginEmailIdTextField)
+        
+        loginSignUpSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+
         
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.loginEmailIdTextField.frame.height))
-        loginEmailIdTextField.rightView = paddingView
-        loginEmailIdTextField.rightViewMode = UITextField.ViewMode.always
         
         
-       loginSignUpSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+        loginButton.isEnabled = false
+
+    }
+    
+    
+    func setPaddingInsideTextLabel(textField: UITextField) {
         
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
+        textField.rightView = paddingView
+        textField.rightViewMode = UITextField.ViewMode.always
+    }
+    
+    func setUpTextFields() {
+        self.loginEmailIdTextField.delegate = self
+        self.loginPasswordTextField.delegate = self
+        loginEmailIdTextField.layer.borderWidth = 2.0
+        loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
         
-//        loginSignUpSegment.layer.masksToBounds = true
-//        loginSignUpSegment.layer.cornerRadius = 2
-//        loginSignUpSegment.layer.borderWidth = 1
-//        loginSignUpSegment.layer.borderColor = UIColor.lightGray.cgColor
-//        loginSignUpSegment.layer.shadowColor = UIColor.lightGray.cgColor
-//        loginSignUpSegment.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-//        loginSignUpSegment.layer.shadowRadius = 1.0
-//        loginSignUpSegment.layer.shadowOpacity = 1.0
-//        loginSignUpSegment.layer.masksToBounds = false
+        loginPasswordTextField.isEnabled = false
         
+        loginEmailIdTextField.becomeFirstResponder()
+        signUpFirstNameTextField.becomeFirstResponder()
+    }
+    
+    
+    func setUpView() {
         loginDetailsView.layer.masksToBounds = true
         loginDetailsView.layer.cornerRadius = 10
         loginDetailsView.layer.borderWidth = 2
@@ -135,22 +152,15 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         signUpDetailsView.layer.shadowOpacity = 1.0
         signUpDetailsView.layer.masksToBounds = false
         
-        //Initial state
-        activityIndicator.isHidden = true
         loginDetailsView.isHidden = false
         signUpDetailsView.isHidden = true
-        
-        loginEmailIdTextField.layer.borderWidth = 2.0
-        loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
-        
-        loginPasswordTextField.isEnabled = false
-        
-        loginEmailIdTextField.becomeFirstResponder()
-        signUpFirstNameTextField.becomeFirstResponder()
-        loginButton.isEnabled = false
-        loginActivityIndicator.isHidden = true
     }
     
+    func setUpIndicators() {
+        activityIndicator.isHidden = true
+        
+        loginActivityIndicator.isHidden = true
+    }
     @IBAction func login() {
         
         
