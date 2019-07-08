@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9Ce-le-7ay">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Agreement-->
+        <scene sceneID="MTU-KR-9nk">
+            <objects>
+                <viewController id="pZa-Pu-Xys" customClass="AgreementViewController" customModule="Employed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7a2-Uq-vjm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="This is not an official Employed application. Data entered by you won't be shared anywhere." textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="gmf-Vm-bHs">
+                                <rect key="frame" x="67.5" y="170" width="240" height="68"/>
+                                <color key="backgroundColor" red="0.92933028939999995" green="0.92946392300000003" blue="0.92930108310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="Rjs-Cc-hls"/>
+                                    <constraint firstAttribute="width" constant="240" id="To7-d5-tGj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="C0C-cr-lDO">
+                                <rect key="frame" x="67.5" y="246" width="240" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNj-Hp-yYC">
+                                        <rect key="frame" x="0.0" y="0.0" width="116.5" height="30"/>
+                                        <color key="backgroundColor" red="0.92933028939999995" green="0.92946392300000003" blue="0.92930108310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Deny">
+                                            <color key="titleColor" red="0.55696168664383561" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="denyButton:" destination="pZa-Pu-Xys" eventType="touchUpInside" id="KNw-c3-OaW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jNG-lc-LAo">
+                                        <rect key="frame" x="123.5" y="0.0" width="116.5" height="30"/>
+                                        <color key="backgroundColor" red="0.92933028939999995" green="0.92946392300000003" blue="0.92930108310000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Accept">
+                                            <color key="titleColor" red="0.0" green="0.44493792808219179" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="acceptButton:" destination="pZa-Pu-Xys" eventType="touchUpInside" id="YL5-HV-Tmy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="QTx-8n-Cxm"/>
+                                    <constraint firstAttribute="height" constant="30" id="iCa-rX-9MH"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.43529412150000002" green="0.4431372583" blue="0.47450980539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="C0C-cr-lDO" firstAttribute="centerX" secondItem="7a2-Uq-vjm" secondAttribute="centerX" id="TaY-NF-Dn2"/>
+                            <constraint firstItem="gmf-Vm-bHs" firstAttribute="centerX" secondItem="7a2-Uq-vjm" secondAttribute="centerX" id="TxD-4T-oef"/>
+                            <constraint firstItem="C0C-cr-lDO" firstAttribute="top" secondItem="gmf-Vm-bHs" secondAttribute="bottom" constant="8" id="uOu-br-qai"/>
+                            <constraint firstItem="gmf-Vm-bHs" firstAttribute="top" secondItem="zAE-ra-hAv" secondAttribute="top" constant="106" id="xHQ-Sm-5yA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zAE-ra-hAv"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Agreement" id="0dw-Db-gcC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CWW-8A-rsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-264.80000000000001" y="-784.85757121439292"/>
+        </scene>
+        <!--Main Tab Bar Controller-->
+        <scene sceneID="Sgq-Wd-XGE">
+            <objects>
+                <tabBarController storyboardIdentifier="MainTabBarController" id="r0H-4e-8hr" customClass="MainTabBarController" customModule="Employed" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ROG-nT-yfh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Bny-m0-FoO" kind="relationship" relationship="viewControllers" id="hw0-WF-rTC"/>
+                        <segue destination="4Y8-wX-FnA" kind="relationship" relationship="viewControllers" id="YS2-tL-yBt"/>
+                        <segue destination="C5g-8L-Yqn" kind="relationship" relationship="viewControllers" id="lLm-h4-sZj"/>
+                        <segue destination="Qql-Pz-FMs" kind="relationship" relationship="viewControllers" id="wz2-0v-bFq"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cjm-YH-ZJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="614" y="-785"/>
+        </scene>
+        <!--EmployeeListStoryboard-->
+        <scene sceneID="ebt-Pf-AQr">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EmployeeListStoryboard" id="Bny-m0-FoO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Employee List" image="people" id="xuI-jL-oZY"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Px7-il-O5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="252" y="-321"/>
+        </scene>
+        <!--GalleryStoryboard-->
+        <scene sceneID="VrZ-Oi-cbt">
+            <objects>
+                <viewControllerPlaceholder storyboardName="GalleryStoryboard" id="4Y8-wX-FnA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Gallery" image="gallery3" id="Mqi-fR-LeZ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ygK-gh-vqw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="523" y="-321"/>
+        </scene>
+        <!--EmployeeLocationStoryboard-->
+        <scene sceneID="hku-ks-VoB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EmployeeLocationStoryboard" id="C5g-8L-Yqn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" image="Map Tab Icon" id="MJx-N6-4cW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IKN-uo-EcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="820" y="-321"/>
+        </scene>
+        <!--LoginAndSignupStoryboard-->
+        <scene sceneID="hhg-il-Ldg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LoginAndSignupStoryboard" id="Qql-Pz-FMs" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Login/SignUp" image="LoginSignup Tab Icon" id="S36-dV-CkS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cgh-N8-b16" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1166" y="-321"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dXA-rQ-zMH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Ce-le-7ay" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WmJ-hm-xRp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pZa-Pu-Xys" kind="relationship" relationship="rootViewController" id="ZUm-Iu-2Os"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yux-So-lZh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1204" y="-784.85757121439292"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LoginSignup Tab Icon" width="24" height="24"/>
+        <image name="Map Tab Icon" width="24" height="24"/>
+        <image name="gallery3" width="24" height="24"/>
+        <image name="people" width="30" height="30"/>
+    </resources>
+</document>

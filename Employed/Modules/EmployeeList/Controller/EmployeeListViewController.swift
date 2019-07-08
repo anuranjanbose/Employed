@@ -161,7 +161,7 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard.init(name: "EmployeeListStoryboard", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "DetailVC") as! DetailsViewController
         employeeAge = result[indexPath.section].employee_age
         employeeSalary = result[indexPath.section].employee_salary
