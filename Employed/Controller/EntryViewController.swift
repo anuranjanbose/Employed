@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
+class EntryViewController: UIViewController, UITextFieldDelegate {
 
     var signupCode: Int!
     var signupMessage: String!
@@ -21,91 +21,72 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     var emailMessage: String!
     var firstName: String!
     var lastName: String!
-    
     var loginValidationCode: Int!
     var loginValidationMessage: String!
     
     let font = UIFont.systemFont(ofSize: 16)
     
-    
-    @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var tickImageView: UIImageView!
-    @IBOutlet weak var loginSignUpSegment: UISegmentedControl!
+    @IBOutlet weak var entryChoiceSegment: UISegmentedControl!
     @IBOutlet weak var loginDetailsView: UIView!
     @IBOutlet weak var signUpDetailsView: UIView!
     @IBOutlet weak var loginEmailIdTextField: UITextField!
+    @IBOutlet weak var emailValidActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loginPasswordTextField: UITextField!
-    
+    @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var signUpFirstNameTextField: UITextField!
     @IBOutlet weak var signUpLastNameTextField: UITextField!
     @IBOutlet weak var signUpEmailIdTextField: UITextField!
     @IBOutlet weak var signUpPasswordTextField: UITextField!
-    
-    @IBOutlet weak var toastLabel: UILabel!
-    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
-    
-    @IBAction func loginSignUpSegmentAction(_ sender: Any) {
-        if loginSignUpSegment.selectedSegmentIndex == 0 {
-            signUpDetailsView.isHidden = true
-            loginDetailsView.isHidden = false
-            
-            
-            
-            
-            
-            self.navigationItem.title = "Login"
-            
-        }
-        else if loginSignUpSegment.selectedSegmentIndex == 1 {
-            signUpDetailsView.isHidden = false
-            loginDetailsView.isHidden = true
-            self.navigationItem.title = "Sign Up"
-        }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationItem.title = "Login"
-        self.loginEmailIdTextField.text = ""
-        self.loginPasswordTextField.text = ""
-        self.loginPasswordTextField.isEnabled = false
-        self.loginEmailIdTextField.layer.borderWidth = 2.0
-        self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
-        self.loginEmailIdTextField.becomeFirstResponder()
-        self.loginActivityIndicator.isHidden = true
-     //   self.loginButton.isEnabled = false
-        
-        self.loginPasswordTextField.layer.borderWidth = 0
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        self.navigationItem.title = "Login"
-    }
+    @IBOutlet weak var toastLabel: UILabel!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.title = "Login"
-
         self.hideKeyboardWhenTappedAround()
-        
-        
+        loginEmailIdTextField.text = "anuranjan.bose@tothenew.com" //Delete after testing
         setUpNavigationBar()
         setUpView()
         setUpTextFields()
         setUpIndicators()
-        
-        setPaddingInsideTextLabel(textField: loginEmailIdTextField)
-        
-        loginSignUpSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-
+        setPaddingInside(textField: loginEmailIdTextField)
+        entryChoiceSegment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         loginButton.isEnabled = false
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loginEmailIdTextField.text = "anuranjan.bose@tothenew.com"
+        loginPasswordTextField.text = ""
+        loginPasswordTextField.isEnabled = false
+        loginEmailIdTextField.layer.borderWidth = 2.0
+        loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
+        loginEmailIdTextField.becomeFirstResponder()
+        loginActivityIndicator.isHidden = true
+        loginPasswordTextField.layer.borderWidth = 0
+    }
+    
+    @IBAction func entrySegmentAction(_ sender: Any) {
+        
+        switch entryChoiceSegment.selectedSegmentIndex {
+        case 0:
+            signUpDetailsView.isHidden = true
+            loginDetailsView.isHidden = false
+            self.navigationItem.title = "Login"
+            loginEmailIdTextField.becomeFirstResponder()
+            
+        case 1:
+            signUpDetailsView.isHidden = false
+            loginDetailsView.isHidden = true
+            self.navigationItem.title = "Sign Up"
+            signUpFirstNameTextField.becomeFirstResponder()
+            
+        default: break
+        }
     }
     
     
-    func setPaddingInsideTextLabel(textField: UITextField) {
+    func setPaddingInside(textField: UITextField) {
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.rightView = paddingView
@@ -113,19 +94,20 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setUpTextFields() {
-        self.loginEmailIdTextField.delegate = self
-        self.loginPasswordTextField.delegate = self
+        loginEmailIdTextField.delegate = self
+        loginPasswordTextField.delegate = self
+        signUpFirstNameTextField.delegate = self
+        signUpLastNameTextField.delegate = self
+        signUpEmailIdTextField.delegate = self
+        signUpPasswordTextField.delegate = self
         loginEmailIdTextField.layer.borderWidth = 2.0
         loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
-        
         loginPasswordTextField.isEnabled = false
-        
-        loginEmailIdTextField.becomeFirstResponder()
-        signUpFirstNameTextField.becomeFirstResponder()
     }
     
     
     func setUpView() {
+        //Login Details View
         loginDetailsView.layer.masksToBounds = true
         loginDetailsView.layer.cornerRadius = 10
         loginDetailsView.layer.borderWidth = 2
@@ -135,9 +117,9 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         loginDetailsView.layer.shadowRadius = 1.0
         loginDetailsView.layer.shadowOpacity = 1.0
         loginDetailsView.layer.masksToBounds = false
-        
-        
-        
+        loginDetailsView.isHidden = false
+
+        //Signup Details View
         signUpDetailsView.layer.masksToBounds = true
         signUpDetailsView.layer.cornerRadius = 10
         signUpDetailsView.layer.borderWidth = 2
@@ -147,26 +129,20 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
         signUpDetailsView.layer.shadowRadius = 1.0
         signUpDetailsView.layer.shadowOpacity = 1.0
         signUpDetailsView.layer.masksToBounds = false
-        
-        loginDetailsView.isHidden = false
         signUpDetailsView.isHidden = true
     }
     
     func setUpIndicators() {
-        activityIndicator.isHidden = true
-        
+        emailValidActivityIndicator.isHidden = true
         loginActivityIndicator.isHidden = true
     }
+    
     @IBAction func login() {
         
-        
-      //  self.activityIndicatorLoginView.isHidden = false
         loginButton.isEnabled = false
         loginActivityIndicator.isHidden = false
         let mail = loginEmailIdTextField.text!
         let password = loginPasswordTextField.text!
-        
-        
         let parameters = [
             "mail" : mail ,
             "password" : password,
@@ -244,8 +220,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     func loginHandler() {
         if loginValidationCode == 1 {
             DispatchQueue.main.async {
-                
-                self.navigateToWelcomeNewUserViewController()
+                self.navigateToProfileViewController()
                 print(self.loginValidationMessage)
             }
         } else {
@@ -302,7 +277,7 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                             print("=========================== \(codeMessageResponse)")
                             self.signupMessage = codeMessageResponse ?? "Email Already Registered"
                             DispatchQueue.main.async {
-                                self.navigate()
+                                self.signUpHandler()
                             }
                         }
                     }
@@ -317,18 +292,17 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    func navigate() {
+    func signUpHandler() {
         if(signupCode == 1) {
             toastLabel.toast(message: "Registered Successfully")
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callbackPOP), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.resetSignupViewTextFields), userInfo: nil, repeats: false)
             
         } else {
             toastLabel.toast(message: "\(signupMessage!)")
         }
     }
     
-    @objc func callbackPOP() {
-        self.navigationController?.popViewController(animated: true)
+    @objc func resetSignupViewTextFields() {
         signUpFirstNameTextField.text = ""
         signUpLastNameTextField.text = ""
         signUpEmailIdTextField.text = ""
@@ -386,75 +360,16 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     func setUpNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: nil, action: nil)
     }
 
     
     
     @IBAction func emailIdTextFieldEditingChanged() {
-        
-        
-        
         loginPasswordTextField.layer.borderWidth = 0
         loginPasswordTextField.isEnabled = false
-        
         loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
-        
-//        if loginEmailIdTextField.text == "" {
-//            self.tickImageView.isHidden = true
-//            self.activityIndicator.isHidden = true
-//            self.toastLabel.isHidden = true
-//            self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
-//        } else {
-//
-//        self.tickImageView.isHidden = true
-//        self.activityIndicator.isHidden = false
-//        let mail = loginEmailIdTextField.text
-//        let parameters = ["mail" : mail]
-//        guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Validate/Email?_format=json") else { return }
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) else {
-//                return }
-//        request.httpBody = httpBody
-//        let session = URLSession.shared
-//        print("============%@", parameters)
-//        print("============%@", request.allHTTPHeaderFields)
-//        session.dataTask(with: request) { (data, response, error) in
-//            if let response = response {
-//                print(response)
-//            }
-//            if let data = data {
-//                do {
-//                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
-//                        print("json \(json)")
-//                        if let statusCode = json["status"] as? [String:Any]{
-//                            print(statusCode)
-//                            guard let codeResponse = statusCode["code"] as? Int else {return}
-//                            print("=========================== \(codeResponse)")
-//                            self.emailValidationCode = codeResponse
-//                            self.validateEmail()
-//                        }
-//                        if let statusMessage = json["status"] as? [String:Any]{
-//                            print(statusMessage)
-//                            guard let codeResponseMessage = statusMessage["message"] as? String else {return}
-//                            print("=========================== \(codeResponseMessage)")
-//                            self.emailMessage = codeResponseMessage
-//                        }
-//                    }
-//                } catch {
-//                    print(error)
-//                }
-//            }
-//
-//            }.resume()
-//        print(emailValidationCode as Any)
-//        print(emailMessage as Any)
-//        }
-//
     }
 
     
@@ -470,16 +385,13 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == loginEmailIdTextField {
             
-            self.loginEmailIdTextField.resignFirstResponder()
-            self.loginPasswordTextField.becomeFirstResponder()
-            
             if loginEmailIdTextField.text == "" {
-                self.activityIndicator.isHidden = true
+                self.emailValidActivityIndicator.isHidden = true
                 self.toastLabel.isHidden = true
                 self.loginEmailIdTextField.layer.borderColor = UIColor.black.cgColor
             } else {
                 
-                self.activityIndicator.isHidden = false
+                self.emailValidActivityIndicator.isHidden = false
                 let mail = loginEmailIdTextField.text
                 let parameters = ["mail" : mail]
                 guard let url = URL(string: "https://qa.curiousworld.com/api/v3/Validate/Email?_format=json") else { return true }
@@ -524,17 +436,6 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 print(emailValidationCode as Any)
                 print(emailMessage as Any)
             }
-            
-            
-            
-            
-            
-            
-            
-         //       self.loginPasswordTextField.becomeFirstResponder()
-            
-            
-           // loginPasswordTextField.becomeFirstResponder()
         }
         return true
     }
@@ -547,29 +448,23 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
                 self.toastLabel.isHidden = true
                 self.loginPasswordTextField.isEnabled = true
                 self.loginPasswordTextField.becomeFirstResponder()
-
-                self.activityIndicator.isHidden = true
-              //  self.tickImageView.isHidden = false
-               // self.tickImageView.image = UIImage(named: "tick.png")
+                self.emailValidActivityIndicator.isHidden = true
                 self.loginEmailIdTextField.layer.borderWidth = 2.0
-                self.loginEmailIdTextField.layer.borderColor = UIColor(red:19/255, green:135/255, blue:73/255, alpha: 1).cgColor
+                self.loginEmailIdTextField.layer.borderColor = UIColor.iVarGreen.cgColor
                 self.loginPasswordTextField.isEnabled = true
                 
                 self.loginPasswordTextField.layer.borderWidth = 2.0
                 self.loginPasswordTextField.layer.borderColor = UIColor.black.cgColor
                 self.flag = self.flag + 1
             }
-        }
-        else {
+        } else {
             
             DispatchQueue.main.async {
                 if self.loginEmailIdTextField.text != "" {
                     self.loginPasswordTextField.isEnabled = false
-                    self.activityIndicator.isHidden = true
-                  //  self.tickImageView.isHidden = false
-                   // self.tickImageView.image = UIImage(named: "cross.png")
+                    self.emailValidActivityIndicator.isHidden = true
                     self.loginEmailIdTextField.layer.borderWidth = 2.0
-                    self.loginEmailIdTextField.layer.borderColor = UIColor(red:168/255, green:42/255, blue:42/255, alpha: 1).cgColor
+                    self.loginEmailIdTextField.layer.borderColor = UIColor.iVarRed.cgColor
                     self.loginPasswordTextField.layer.borderWidth = 0
                     
                     if let message = self.emailMessage {
@@ -583,12 +478,11 @@ class LoginSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    func navigateToWelcomeNewUserViewController() {
+    func navigateToProfileViewController() {
         loginActivityIndicator.isHidden = true
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "WelcomeNewUserViewController") as! WelcomeNewUserViewController
-        controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
+        let controller = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+//        controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
         self.navigationController?.pushViewController(controller, animated: true)
-        //self.loginButton.isEnabled = true
     }
 }

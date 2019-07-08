@@ -15,16 +15,16 @@ var employeeName: String?
 
 class EmployeeListViewController: UIViewController {
     
-
+    @IBOutlet weak var employeeListTableView: UITableView!
     @IBOutlet weak var searchFooter: SearchFooter!
     
     let url = "http://dummy.restapiexample.com/api/v1/employees"
-    var detailViewController: DetailViewController? = nil
+    var detailViewController: DetailsViewController? = nil
     var result = [Employee]()
     var filteredResult = [Employee]()
     let searchController = UISearchController(searchResultsController: nil)
     
-    @IBOutlet weak var employeeListTableView: UITableView!
+    
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,7 +68,7 @@ class EmployeeListViewController: UIViewController {
         
         if let splitViewController = splitViewController {
             let controllers = splitViewController.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailsViewController
         }
 
     }
@@ -99,7 +99,6 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
-    //    return 1
         if isFiltering() {
             searchFooter.setIsFilteringToShow(filteredItemCount: filteredResult.count, of: result.count)
             return filteredResult.count
@@ -111,14 +110,6 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if isFiltering() {
-//            searchFooter.setIsFilteringToShow(filteredItemCount: filteredResult.count, of: result.count)
-//            return filteredResult.count
-//        }
-//
-//        searchFooter.setNotFiltering()
-//        return result.count
-        
         return 1
     }
     
@@ -171,7 +162,7 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: "DetailVC") as! DetailsViewController
         employeeAge = result[indexPath.section].employee_age
         employeeSalary = result[indexPath.section].employee_salary
         employeeName = result[indexPath.section].employee_name
@@ -189,17 +180,6 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
         UIView.animate(withDuration: 0.7) { //0.8
             cell.transform = CGAffineTransform.identity
         }
-        
-        
-        
-//        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
-//        UIView.animate(withDuration: 0.9, animations: {
-//            cell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
-//        },completion: { finished in
-//            UIView.animate(withDuration: 0.1, animations: {
-//                cell.layer.transform = CATransform3DMakeScale(1,1,1)
-//            })
-//        })
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -245,18 +225,11 @@ extension EmployeeListViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func setupNavBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        //        navigationItem.largeTitleDisplayMode = .automatic
     }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        employeeListTableView.reloadData()
-//    }
 }
 
 //extension EmployeeListVC: UISearchBarDelegate {

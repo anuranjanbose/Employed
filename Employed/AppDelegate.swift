@@ -18,6 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 0.95, green: 0.95, blue: 0.92, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.black
+        
+        let navigationFont = UIFont(name: "AppleSDGothicNeo-Medium", size: 25)!
+        let navigationFontAttributes = [NSAttributedString.Key.font: navigationFont]
+        
+        UINavigationBar.appearance().titleTextAttributes = navigationFontAttributes
+        UIBarButtonItem.appearance().setTitleTextAttributes(navigationFontAttributes, for: .normal)
+        
+        
+        
         if UserDefaults.standard.bool(forKey: "accepted") {
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)

@@ -10,8 +10,6 @@ import UIKit
 
 class GalleryViewController: UIViewController {
 
-    
-    
     var counter = 0
     var countOfItems : Int = 10
     var startIndex = 1
@@ -23,7 +21,6 @@ class GalleryViewController: UIViewController {
         let items: [SubItems]
     }
     
-
     struct SubItems: Decodable{
         let title: String
         let image: SubImageInfo
@@ -35,9 +32,7 @@ class GalleryViewController: UIViewController {
         let thumbnailLink: String
     }
     
-    
     var storingArray:  [GoogleApiStruct]?
-    
     var imageArray = [String]()
     var titleArray = [String]()
     
@@ -48,7 +43,6 @@ class GalleryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationBar()
         loadMoreButton.layer.borderWidth = 1
         loadMoreButton.layer.borderColor = UIColor.black.cgColor
         loadMoreButton.backgroundColor = .lightGray
@@ -64,11 +58,7 @@ class GalleryViewController: UIViewController {
         galleryCollectionView.register(nib, forCellWithReuseIdentifier: "GalleryImageCollectionViewCell")
         
     }
-    
-    func setUpNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
 
-    }
 
     
     func fetchImageFromJSON() {
@@ -181,8 +171,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         
         return cell
-        
     }
-    
 }
 

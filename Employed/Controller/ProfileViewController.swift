@@ -9,17 +9,8 @@
 import UIKit
 import MapKit
 
-class WelcomeNewUserViewController: UIViewController {
-    
-    @IBOutlet weak var welcomeNavigationBar: UINavigationBar!
-    var employeeName: String!
+class ProfileViewController: UIViewController {
 
-    @IBOutlet weak var logoutActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var logoutButton: UIButton!
-    @IBOutlet weak var employeeProfileImageView: UIImageView!
-    
-    @IBOutlet weak var employeeNameLabel: UILabel!
-    @IBOutlet weak var updateImageButton: UIButton!
     
     @IBAction func logoutButtonAction() {
         UserDefaults.standard.set(false, forKey: "loggedin")
@@ -28,7 +19,7 @@ class WelcomeNewUserViewController: UIViewController {
         UserDefaults.standard.set("nil", forKey: "uid")
         UserDefaults.standard.set("nil", forKey: "sub")
        // self.dismiss(animated: true, completion: nil)
-         logoutActivityIndicator.isHidden = false
+        // logoutActivityIndicator.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
            // self.myTableView.reloadData()
            self.navigationController?.popViewController(animated: true)
@@ -36,14 +27,11 @@ class WelcomeNewUserViewController: UIViewController {
         
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        logoutActivityIndicator.isHidden = true
-        self.navigationController?.isNavigationBarHidden = true
-        
-        employeeNameLabel.text = employeeName
-
+        self.navigationItem.title = "Profile"
+        self.navigationItem.hidesBackButton = true
     }
     
 }

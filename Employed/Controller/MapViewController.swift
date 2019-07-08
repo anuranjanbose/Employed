@@ -10,8 +10,6 @@ import UIKit
 import MapKit
 import CoreData
 
-
-
 class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var tapView: UIView!
@@ -19,8 +17,7 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, M
     
     let locationManager = CLLocationManager()
     
-    fileprivate lazy var fetchedResultController: NSFetchedResultsController<Annotation> =
-    {
+    fileprivate lazy var fetchedResultController: NSFetchedResultsController<Annotation> = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let context = appDelegate?.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest = Annotation.fetchRequest()
@@ -30,61 +27,34 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, M
         try! fetchResultController.performFetch()
         return fetchResultController
     }()
-    
-    
-    func setUpNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-    }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationBar()
         tapView.layer.borderWidth = 1.0
         tapView.layer.masksToBounds = false
         tapView.layer.borderColor = UIColor.white.cgColor
         tapView.layer.cornerRadius = tapView.frame.size.width / 2
         tapView.clipsToBounds = true
-        
-        if CLLocationManager.authorizationStatus() == .notDetermined
-        {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
-        }
-        else if CLLocationManager.authorizationStatus() == .denied
-        {
+        } else if CLLocationManager.authorizationStatus() == .denied {
             print("Location services were previously denied. Please enable location services for this app in Settings.")
-        }
-        else if CLLocationManager.authorizationStatus() == .authorizedAlways
-        {
+        } else if CLLocationManager.authorizationStatus() == .authorizedAlways {
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = 1.0
             locationManager.delegate = self
             locationManager.stopUpdatingLocation()
-            
         }
         mapView.mapType = MKMapType.standard
         mapView.showsUserLocation = true
-        
-        
-        
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-        
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(sender:)))
         tap.delegate = self
         tapView.addGestureRecognizer(tap)
-        
-        
     }
-    @objc func viewTapped(sender: UITapGestureRecognizer) {
-        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-    }
-    
     
     override func viewWillAppear(_ animated: Bool) {
-        for item in fetchedResultController.fetchedObjects!
-        {
+        for item in fetchedResultController.fetchedObjects! {
             let annotations = MKPointAnnotation()
             annotations.title = item.name
             annotations.coordinate = CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)
@@ -92,16 +62,14 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate, M
         }
         print(fetchedResultController.fetchedObjects!.count)
     }
-    
-    
 }
-
-
-
 
 extension MapViewController {
     
     
+    @objc func viewTapped(sender: UITapGestureRecognizer) {
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))

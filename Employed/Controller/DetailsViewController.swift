@@ -10,7 +10,7 @@ import MapKit
 import UIKit
 import CoreData
 
-class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveDataToCoreData, NSFetchedResultsControllerDelegate {
+class DetailsViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate, SaveDataToCoreData, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var addAnnotationStatusToastLabel: UILabel!
     @IBOutlet weak var employeeSalaryLabel: UILabel!
@@ -240,7 +240,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate, MKMap
 }
 
 
-extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailsViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.galleryImageURL.count
     }
@@ -291,7 +291,7 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
 
 
 
-extension DetailViewController {
+extension DetailsViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
         self.employeeMapView.setRegion(region, animated: true)
@@ -312,7 +312,7 @@ extension DetailViewController {
     
 }
 
-extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension DetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let imageurl = info[UIImagePickerController.InfoKey.imageURL] as! NSURL
