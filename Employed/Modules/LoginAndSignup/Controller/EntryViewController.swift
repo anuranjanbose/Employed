@@ -482,7 +482,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         loginActivityIndicator.isHidden = true
         let storyboard = UIStoryboard(name: "LoginAndSignupStoryboard", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-//        controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
+       controller.employeeName = "\(UserDefaults.standard.string(forKey: "fn")!)  \(UserDefaults.standard.string(forKey: "ln")!)"
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
