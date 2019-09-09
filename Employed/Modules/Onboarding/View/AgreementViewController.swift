@@ -18,7 +18,6 @@ class AgreementViewController: UIViewController {
     @IBAction func acceptButton(_ sender: UIButton) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-       // self.navigationController?.pushViewController(controller, animated: true)
         self.present(controller, animated: true, completion: nil)
         UserDefaults.standard.set(true, forKey: "accepted")
     }
