@@ -9,15 +9,15 @@
 import Foundation
 
 struct UserModel {
-    var firstName: String
-    var lastName: String
-    var uid: String
-    var subscriptionStatus: String
+    var firstName: String?
+    var lastName: String?
+    var uid: String?
+    var subscriptionStatus: String?
     
     init(json: [String : Any]) {
-        self.firstName = json["firstName"] as! String
-        self.lastName = json["lastName"] as! String
-        self.uid = json["uid"] as! String
-        self.subscriptionStatus = json["subscriptionStatus"] as! String
+        self.firstName = json["firstName"] as? String
+        self.lastName = json["lastName"] as? String
+        self.uid = json["uid"] as? String
+        self.subscriptionStatus = json["subscriptionStatus"] as? String
     }
 }

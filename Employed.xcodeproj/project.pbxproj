@@ -34,6 +34,8 @@
 		7D4E84B422AF811E00412DB9 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E84B322AF811E00412DB9 /* Connectivity.swift */; };
 		7D4E84B722AF828400412DB9 /* EmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E84B522AF828400412DB9 /* EmployeeTableViewCell.swift */; };
 		7D4E84B822AF828400412DB9 /* EmployeeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D4E84B622AF828400412DB9 /* EmployeeTableViewCell.xib */; };
+		7D6ADFEC2334EEA300E7E122 /* APIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6ADFEB2334EEA300E7E122 /* APIProtocol.swift */; };
+		7D6ADFEE2334EF1000E7E122 /* UserRegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6ADFED2334EF1000E7E122 /* UserRegistrationModel.swift */; };
 		7D943F2D22BBAAFD0040F7F0 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D943F2C22BBAAFD0040F7F0 /* TableView.swift */; };
 		7DC1313822B95F8900339A1B /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC1313722B95F8900339A1B /* AgreementViewController.swift */; };
 		7DCDC56B22AFC2E000870157 /* CustomSegment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DCDC56A22AFC2E000870157 /* CustomSegment.xib */; };
@@ -101,6 +103,8 @@
 		7D4E84B322AF811E00412DB9 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		7D4E84B522AF828400412DB9 /* EmployeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeTableViewCell.swift; sourceTree = "<group>"; };
 		7D4E84B622AF828400412DB9 /* EmployeeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmployeeTableViewCell.xib; sourceTree = "<group>"; };
+		7D6ADFEB2334EEA300E7E122 /* APIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProtocol.swift; sourceTree = "<group>"; };
+		7D6ADFED2334EF1000E7E122 /* UserRegistrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationModel.swift; sourceTree = "<group>"; };
 		7D943F2C22BBAAFD0040F7F0 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		7DC1313722B95F8900339A1B /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		7DCDC56A22AFC2E000870157 /* CustomSegment.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSegment.xib; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				2C4B6896231D16FA001B9C0A /* UserModel.swift */,
+				7D6ADFED2334EF1000E7E122 /* UserRegistrationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 			children = (
 				7D3D76BD22B0DDA50058F2FE /* Toast.swift */,
 				7D18590222B77BB000FC6489 /* SaveDataToCoreData.swift */,
+				7D6ADFEB2334EEA300E7E122 /* APIProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -724,7 +730,9 @@
 				2C4B68A1231D1C22001B9C0A /* DataController.swift in Sources */,
 				7D943F2D22BBAAFD0040F7F0 /* TableView.swift in Sources */,
 				7DCDC56D22AFC60300870157 /* CustomSegment.swift in Sources */,
+				7D6ADFEE2334EF1000E7E122 /* UserRegistrationModel.swift in Sources */,
 				7DE349E722BCB2D70003D375 /* DismissKeyboard.swift in Sources */,
+				7D6ADFEC2334EEA300E7E122 /* APIProtocol.swift in Sources */,
 				2C4B689A231D1949001B9C0A /* Constants.swift in Sources */,
 				2CC6621322D08B2300DAF985 /* StringExtension.swift in Sources */,
 				2C4B6897231D16FA001B9C0A /* UserModel.swift in Sources */,

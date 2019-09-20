@@ -13,8 +13,7 @@ protocol Toast {
     func toast(message : String)
 }
 
-extension UILabel : Toast
-{
+extension UILabel : Toast {
     
     func toast(message: String)  {
         self.isHidden = false

@@ -12,8 +12,7 @@ import Foundation
 import CoreData
 import UIKit
 
-protocol SaveDataToCoreData
-{
+protocol SaveDataToCoreData {
     //declaration
     func addData(name : String , longitude : Double , latitude : Double)
     func addEmployeeImageToGallery(imageURL: String, employeeName: String)
@@ -29,11 +28,9 @@ extension SaveDataToCoreData {
         annotations.setValue(name , forKey: "name")
         annotations.setValue(longitude , forKey: "longitude")
         annotations.setValue(latitude , forKey: "latitude")
-        do
-        {
+        do {
             try context.save()
-        }catch let error as NSError
-        {
+        } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }

@@ -141,8 +141,10 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         loginButton.isEnabled = false
         loginActivityIndicator.isHidden = false
+        
         let mail = loginEmailIdTextField.text!
         let password = loginPasswordTextField.text!
+        
         let parameters = [
             "mail" : mail ,
             "password" : password,
@@ -184,10 +186,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                         if let userData = json["data"] as? [String : Any] {
                             guard let firstName = userData["firstName"] as? String else { return }
                             guard let lastName = userData["lastName"] as? String else { return }
-                            //self.loginparams.lastName = lastName
-                            
                             guard let uID = userData["uid"] as? String else { return }
-                            //self.loginparams.iID = uID
                             
                             guard let subscriptionStatus = userData["subscriptionStatus"] as? String else { return }
                             UserDefaults.standard.set(true, forKey: "loggedin")
